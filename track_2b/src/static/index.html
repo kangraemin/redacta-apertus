@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redacta — decision review</title>
+<style>
+  /* no web fonts or CDNs: the screen must work inside a court network without internet */
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1f23; --muted: #6b6f76; --line: #e2dfd7;
+    --red: #b42318; --red-bg: #fde8e6; --amber: #a15c07; --amber-bg: #fdf1dc;
+    --blue: #1f4e8c; --blue-bg: #e8eef8; --green: #1e6b3a; --green-bg: #e3f2e8;
+    --accent: #7a1c1c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.45 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 20px; background: #1d1f23; color: #fff; }
+  header .brand { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
+  header .brand span { color: #f0b3a8; }
+  header .tag { font-size: 12px; padding: 3px 9px; border-radius: 99px; background: #33363c; color: #d8dadf; }
+  header .tag.ok { background: #1e4d33; color: #c8f0d6; }
+  header .grow { flex: 1; }
+  header input { background: #33363c; border: 1px solid #4a4e55; color: #fff; border-radius: 6px; padding: 5px 8px; width: 150px; }
+  main { display: grid; grid-template-columns: 250px 1fr 360px; height: calc(100vh - 50px); }
+  aside, section { overflow: auto; }
+  #list { border-right: 1px solid var(--line); background: var(--panel); }
+  #list h3, #side h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 16px 16px 8px; }
+  .doc { padding: 9px 16px; cursor: pointer; border-left: 3px solid transparent; }
+  .doc:hover { background: #faf9f6; }
+  .doc.active { background: #f3efe6; border-left-color: var(--accent); }
+  .doc .t { font-weight: 600; font-size: 13px; }
+  .doc .m { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-top: 2px; }
+  .lang { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; background: #ece9e1; color: #555; }
+  .st-analysing { color: var(--amber); } .st-ready { color: var(--muted); } .st-error { color: var(--red); }
+  .st-approved { color: var(--green); font-weight: 600; }
+  .btn { border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 7px 12px; cursor: pointer; font: inherit; }
+  .btn:hover { background: #faf9f6; }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+  .btn.primary:disabled { opacity: .45; cursor: not-allowed; }
+  #pastebtn { margin: 12px 16px; width: calc(100% - 32px); }
+  #doc { padding: 0 34px 60px; }
+  .toolbar { position: sticky; top: 0; background: var(--bg); padding: 14px 0 10px; display: flex; gap: 8px; align-items: center; z-index: 2; border-bottom: 1px solid var(--line); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+  .seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; font: inherit; }
+  .seg button.on { background: #1d1f23; color: #fff; }
+  .legend { font-size: 12px; color: var(--muted); display: flex; gap: 12px; margin-left: auto; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  #text { white-space: pre-wrap; font: 15px/1.65 Georgia, "Times New Roman", serif; max-width: 820px; margin-top: 18px;
+          background: var(--panel); padding: 28px 36px; border: 1px solid var(--line); border-radius: 10px; }
+  mark { cursor: pointer; border-radius: 3px; padding: 0 1px; color: inherit; }
+  mark.redact { background: var(--red-bg); box-shadow: inset 0 -2px 0 var(--red); }
+  mark.review { background: var(--amber-bg); box-shadow: inset 0 -2px 0 var(--amber); }
+  mark.keep { background: transparent; box-shadow: inset 0 -1px 0 var(--blue); }
+  mark sup { font: 700 9px/1 -apple-system, Arial, sans-serif; color: var(--red); margin-left: 2px; }
+  mark.flash { outline: 2px solid var(--ink); }
+  .ph { background: #ece9e1; border-radius: 3px; padding: 0 2px; font-weight: 600; }
+  #side { border-left: 1px solid var(--line); background: var(--panel); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 14px 16px 4px; }
+  .stat { border-radius: 9px; padding: 9px 10px; }
+  .stat b { display: block; font-size: 21px; line-height: 1.1; }
+  .stat span { font-size: 11px; }
+  .stat.r { background: var(--red-bg); color: var(--red); } .stat.a { background: var(--amber-bg); color: var(--amber); }
+  .stat.k { background: var(--blue-bg); color: var(--blue); }
+  .ent { margin: 0 12px 6px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; display: grid;
+         grid-template-columns: 1fr auto; gap: 2px 8px; cursor: pointer; }
+  .ent:hover { border-color: #c9c4b8; }
+  .ent .n { font-weight: 600; overflow-wrap: anywhere; }
+  .ent .r { grid-column: 1; font-size: 12px; color: var(--muted); }
+  .ent .sw { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+  .ent.redact { border-left: 3px solid var(--red); } .ent.review { border-left: 3px solid var(--amber); background: #fffaf0; }
+  .ent.keep { border-left: 3px solid var(--blue); }
+  .pill { font: 700 10px/1 -apple-system, Arial, sans-serif; padding: 2px 5px; border-radius: 4px; background: #ece9e1; color: #555; margin-left: 4px; vertical-align: 1px; }
+  .sw select { font: inherit; font-size: 12px; padding: 3px; border-radius: 6px; border: 1px solid var(--line); background: #fff; }
+  .approve { position: sticky; bottom: 0; background: var(--panel); border-top: 1px solid var(--line); padding: 12px 16px; }
+  .approve .btn { width: 100%; padding: 10px; }
+  .approve .note { font-size: 12px; color: var(--muted); margin-top: 6px; min-height: 16px; }
+  .empty { color: var(--muted); padding: 60px 0; text-align: center; }
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid #e0c48f; border-top-color: var(--amber); border-radius: 50%; animation: spin 1s linear infinite; vertical-align: -2px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  dialog { border: 1px solid var(--line); border-radius: 12px; width: min(760px, 92vw); padding: 20px; }
+  dialog textarea { width: 100%; height: 340px; font: 13px/1.5 Georgia, serif; padding: 10px; border: 1px solid var(--line); border-radius: 8px; }
+  dialog .row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Redacta <span>·</span> decision anonymisation</div>
+  <div class="tag ok" id="model">Apertus</div>
+  <div class="tag">runs on this network only</div>
+  <div class="grow"></div>
+  <label style="font-size:12px;color:#c9ccd2">Reviewer <input id="reviewer" placeholder="your initials"></label>
+</header>
+<main>
+  <aside id="list">
+    <button class="btn" id="pastebtn">+ Paste a decision</button>
+    <h3>Decisions</h3>
+    <div id="docs"></div>
+  </aside>
+  <section id="doc"><div class="empty">Choose a decision on the left.</div></section>
+  <aside id="side"></aside>
+</main>
+<dialog id="paste">
+  <h3 style="margin-top:0">Paste a decision (German, French or Italian)</h3>
+  <textarea id="pastetext" placeholder="Paste the full text of the decision, including the header with the parties."></textarea>
+  <div class="row"><button class="btn" onclick="paste.close()">Cancel</button><button class="btn primary" id="pastego">Analyse</button></div>
+</dialog>
+<script>
+const $ = s => document.querySelector(s);
+let docs = [], cur = null, data = null, dec = {}, view = 'review', poll = null;
+const KIND = {PERSON: 'person', ORG: 'organisation', ADDRESS: 'address', DATE_OF_BIRTH: 'birth date', EMAIL: 'e-mail',
+              PHONE: 'phone', IBAN: 'IBAN', AHV: 'AHV no.', PLATE: 'plate', LOCATION: 'place'};
+const esc = s => s.replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
+try { $('#reviewer').value = localStorage.getItem('reviewer') || ''; } catch (e) {}
+$('#reviewer').onchange = e => { try { localStorage.setItem('reviewer', e.target.value); } catch (_) {} };
+
+async function loadDocs() {
+  docs = await (await fetch('/api/docs')).json();
+  $('#docs').innerHTML = docs.map(d => `
+    <div class="doc ${cur === d.id ? 'active' : ''}" onclick="openDoc('${d.id}')">
+      <div class="t">${esc(d.title)}</div>
+      <div class="m"><span class="lang">${d.lang.toUpperCase()}</span>${status(d)}</div>
+    </div>`).join('');
+  if (docs.some(d => d.status === 'analysing' || d.status === 'queued')) { clearTimeout(poll); poll = setTimeout(refresh, 2500); }
+}
+function status(d) {
+  if (d.approved) return '<span class="st-approved">✓ approved</span>';
+  if (d.status === 'analysing') return '<span class="st-analysing"><span class="spinner"></span> Apertus reading…</span>';
+  if (d.status === 'queued') return '<span class="st-analysing">queued</span>';
+  if (d.status === 'error') return '<span class="st-error">error</span>';
+  return '<span class="st-ready">ready for review</span>';
+}
+async function refresh() { await loadDocs(); if (cur && (!data || data.status !== 'ready')) openDoc(cur, true); }
+
+async function openDoc(id, keep) {
+  cur = id;
+  data = await (await fetch('/api/doc/' + id)).json();
+  if (!keep) view = 'review';
+  dec = {};
+  if (data.result) for (const e of data.result.entities) dec[e.id] = data.decisions[e.id] || e.decision;
+  loadDocs(); draw();
+}
+function decided(e) { return dec[e.id]; }
+
+function draw() {
+  if (!data) return;
+  if (data.status !== 'ready') {
+    $('#doc').innerHTML = `<div class="empty">${data.status === 'error' ? 'Error: ' + esc(data.error || '') :
+      '<span class="spinner"></span> Apertus is reading this decision. Nothing leaves this machine.'}</div>`;
+    $('#side').innerHTML = '';
+    return;
+  }
+  const ents = data.result.entities;
+  const spans = [];
+  for (const e of ents) for (const [s, t] of e.mentions) spans.push([s, t, e]);
+  spans.sort((a, b) => a[0] - b[0]);
+  let html = '', pos = 0;
+  const labels = labelMap();
+  if (view === 'review') {
+    for (const [s, t, e] of spans) {
+      if (s < pos) continue;
+      html += esc(data.text.slice(pos, s));
+      const d = decided(e);
+      const sup = d === 'redact' && labels[e.id] ? `<sup>${labels[e.id]}</sup>` : '';
+      html += `<mark class="${d}" data-id="${e.id}" title="${esc(KIND[e.kind] || e.kind)} · ${esc(e.reason)} — click to change">${esc(data.text.slice(s, t))}${sup}</mark>`;
+      pos = t;
+    }
+    html += esc(data.text.slice(pos));
+  }
+  $('#doc').innerHTML = `
+    <div class="toolbar">
+      <div class="seg"><button class="${view === 'review' ? 'on' : ''}" onclick="setView('review')">Review</button>
+      <button class="${view === 'published' ? 'on' : ''}" onclick="setView('published')">Published version</button></div>
+      <div class="legend"><span><i style="background:var(--red-bg);box-shadow:inset 0 -2px 0 var(--red)"></i>redact</span>
+      <span><i style="background:var(--amber-bg);box-shadow:inset 0 -2px 0 var(--amber)"></i>you decide</span>
+      <span><i style="box-shadow:inset 0 -1px 0 var(--blue)"></i>kept (public role)</span></div>
+    </div>
+    <div id="text">${view === 'review' ? html : '…'}</div>`;
+  if (view === 'published') publish();
+  document.querySelectorAll('#text mark').forEach(m => m.onclick = () => cycle(+m.dataset.id));
+  drawSide(ents, labels);
+}
+function labelMap() {
+  const out = {}; let i = 0;
+  const L = n => n < 26 ? String.fromCharCode(65 + n) : String.fromCharCode(65 + Math.floor(n / 26) - 1) + String.fromCharCode(65 + n % 26);
+  for (const e of [...data.result.entities].sort((a, b) => a.mentions[0][0] - b.mentions[0][0]))
+    if (decided(e) === 'redact' && (e.kind === 'PERSON' || e.kind === 'ORG')) out[e.id] = L(i++);
+  return out;
+}
+async function publish() {
+  const r = await (await fetch('/api/preview/' + cur, {method: 'POST', body: JSON.stringify({decisions: dec})})).json();
+  $('#text').innerHTML = esc(r.text).replace(/([A-Z]{1,2}\.________|\[…\])/g, '<span class="ph">$1</span>');
+}
+function setView(v) { view = v; draw(); }
+function cycle(id) {
+  const e = data.result.entities.find(x => x.id === id);
+  dec[id] = decided(e) === 'redact' ? 'keep' : 'redact';
+  draw();
+}
+function setDec(id, v) { dec[id] = v; draw(); }
+function focusEnt(id) {
+  const m = document.querySelector(`#text mark[data-id="${id}"]`);
+  if (m) { m.scrollIntoView({block: 'center', behavior: 'smooth'}); m.classList.add('flash'); setTimeout(() => m.classList.remove('flash'), 900); }
+}
+function drawSide(ents, labels) {
+  const groups = {review: [], redact: [], keep: []};
+  for (const e of ents) groups[decided(e)].push(e);
+  const item = e => `
+    <div class="ent ${decided(e)}" onclick="focusEnt(${e.id})">
+      <div class="n">${labels[e.id] ? `<span class="ph">${labels[e.id]}.</span> ` : ''}${esc(e.name)}<span class="pill">${esc(KIND[e.kind] || e.kind)}</span></div>
+      <div class="r">${esc(e.reason)} · ${e.mentions.length}×</div>
+      <div class="sw" onclick="event.stopPropagation()"><select onchange="setDec(${e.id}, this.value)">
+        <option value="redact" ${decided(e) === 'redact' ? 'selected' : ''}>Redact</option>
+        <option value="keep" ${decided(e) === 'keep' ? 'selected' : ''}>Keep</option>
+        ${decided(e) === 'review' ? '<option value="review" selected>Decide…</option>' : ''}
+      </select></div>
+    </div>`;
+  const open = groups.review.length;
+  $('#side').innerHTML = `
+    <div class="stats"><div class="stat r"><b>${groups.redact.length}</b><span>to redact</span></div>
+      <div class="stat a"><b>${open}</b><span>you decide</span></div>
+      <div class="stat k"><b>${groups.keep.length}</b><span>kept</span></div></div>
+    ${open ? '<h3>You decide</h3>' + groups.review.map(item).join('') : ''}
+    <h3>Will be redacted</h3>${groups.redact.map(item).join('') || '<div class="ent"><div class="r">nothing</div></div>'}
+    <h3>Kept: judges, clerks, lawyers, authorities</h3>${groups.keep.map(item).join('') || '<div class="ent"><div class="r">nothing</div></div>'}
+    <div class="approve"><button class="btn primary" ${open ? 'disabled' : ''} onclick="approve()">Approve and export</button>
+      <div class="note" id="note">${open ? open + ' item(s) still need your decision.' : 'Analysed in ' + data.result.seconds + ' s. Your changes are logged.'}</div></div>`;
+}
+async function approve() {
+  const r = await (await fetch('/api/approve/' + cur, {method: 'POST',
+    body: JSON.stringify({decisions: dec, reviewer: $('#reviewer').value})})).json();
+  const changed = r.audit.changed_by_reviewer.length;
+  location.href = '/api/export/' + cur;
+  $('#note').textContent = `Approved: ${r.audit.redacted} item(s) redacted, ${changed} changed by you. Logged in outputs/audit.jsonl.`;
+  loadDocs();
+}
+$('#pastebtn').onclick = () => paste.showModal();
+$('#pastego').onclick = async () => {
+  const r = await (await fetch('/api/analyse', {method: 'POST', body: JSON.stringify({text: $('#pastetext').value})})).json();
+  if (r.error) return alert(r.error);
+  paste.close(); $('#pastetext').value = ''; await loadDocs(); openDoc(r.id);
+};
+fetch('/api/config').then(r => r.json()).then(c => $('#model').textContent = c.model.split('/').pop() + ' · ' + c.endpoint.replace(/^https?:\/\//, ''));
+loadDocs();
+</script>
+</body>
+</html>

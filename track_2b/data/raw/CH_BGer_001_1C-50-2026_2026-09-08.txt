@@ -1,0 +1,106 @@
+1C_50/2026
+
+Arrêt du 8 septembre 2026
+
+Ire Cour de droit public
+
+Composition
+
+MM. les Juges fédéraux Haag, Président,
+
+Chaix et Müller.
+
+Greffier : M. Kurz.
+
+Participants à la procédure
+
+A.________,
+
+représenté par Me Romain Jordan, avocat,
+
+recourant,
+
+contre
+
+Caisse Publique de Prêts sur Gages,
+
+représentée par Me Eric Maugué, avocat,
+
+intimée.
+
+Objet
+
+Droit de la fonction publique; résiliation des rapports de service; compétence,
+
+recours contre l'arrêt de la Cour de justice de la République et canton de Genève, Chambre administrative, du 9 décembre 2025 (ATA/1357/2025 - A/1012/2025-FPUBL).
+
+Faits :
+
+A.
+
+A.________ a été engagé par contrat de travail du 2 avril 2019 comme responsable, puis directeur de la Caisse publique de prêts sur gage du canton de Genève (ci-après: CPPG). Il s'est trouvé en incapacité de travail depuis le mois d'août 2024. Sommé de reprendre le travail le 15 janvier 2025, il ne s'est pas présenté à cette date et a fait valoir un certificat médical jusqu'au 15 février 2025. Le 17 février 2025, l'employeur a résilié les rapports de travail au motif qu'il ne s'était pas présenté à l'échéance de son certificat médical. Un avertissement lui a été adressé le même jour, l'enjoignant de reprendre le travail le 19 février 2025.
+
+A.________ a recouru contre son licenciement auprès de la Chambre administrative de la Cour de justice genevoise, demandant sa réintégration, subsidiairement une indemnité correspondant à 24 mois de salaire.
+
+B.
+
+Par arrêt du 9 décembre 2025, la Chambre administrative a déclaré le recours irrecevable. Selon le statut du personnel de la CPPG (ci-après: le statut), le personnel de la CPPG était engagé par contrat de droit privé. L'art. 18 de la loi sur la CPPG (LCPPG, RS/GE D 2 10), constituait une base légale suffisante pour permettre au Conseil d'administration de la caisse d'adopter un tel statut. Le litige était donc de la compétence des juridictions civiles.
+
+C.
+
+Agissant par la voie du recours en matière de droit public, A.________ demande au Tribunal fédéral d'annuler l'arrêt de la Chambre administrative et de déclarer recevable le recours dirigé contre la résiliation des rapports de service. Subsidiairement, il conclut au renvoi de la cause à la cour cantonale pour nouvelle décision dans le sens des considérants.
+
+La Chambre administrative persiste dans les considérants et le dispositif de son arrêt. La CPPG conclut au rejet du recours. Le recourant a ensuite persisté dans ses conclusions, tout comme l'intimée qui s'est étonnée du droit de réplique accordé au recourant. Ce dernier a persisté une dernière fois dans ses conclusions le 27 juillet 2026.
+
+Considérant en droit :
+
+1.
+
+L'arrêt attaqué déclare irrecevable le recours formé contre la résiliation des rapports de travail signifiée le 17 février 2025. Le recourant conteste l'appréciation de la cour cantonale selon laquelle il s'agirait d'un litige civil. Il peut le faire par la voie du recours de droit public au sens de l'art. 83 let. g LTF; il s'agit au fond d'une contestation de nature pécuniaire, la valeur litigieuse dépassant le seuil de 15'000 fr. fixé à l'art. 85 al. 1 let. b LTF. Le recourant bénéficie par ailleurs d'un intérêt digne de protection à la modification ou à l'annulation de l'arrêt attaqué, et dispose ainsi de la qualité pour recourir (art. 89 al. 1 let. b et c LTF). Le recours est au surplus interjeté en temps utile (art. 100 al. 1 LTF) et dans les formes requises (art. 42 LTF) contre une décision finale (art. 90 LTF; respectivement, contre une décision incidente relative à la compétence au sens de l'art. 92 al. 1 LTF) prise par l'autorité cantonale de dernière instance (art. 86 al. 1 let. d LTF). Il convient dès lors d'entrer en matière.
+
+2.
+
+Le recourant se plaint d'arbitraire dans l'application de l'art. 18 LCPPG et d'une violation du principe de la séparation des pouvoirs. Selon l'art. 29 de la loi genevoise sur l'organisation des institutions de droit public (LOIDP, RS/GE A 2 24), la loi applicable à l'institution détermine le statut de son personnel ou permet au conseil d'administration (CA) d'édicter le statut; à défaut, la loi générale relative au personnel de l'administration cantonale, du pouvoir judiciaire et des établissements publics médicaux (LPAC, RS/GE B 5 05) s'applique. Lors de l'adoption de cette disposition, le législateur genevois a modifié les dispositions des lois spéciales afin soit d'habiliter les CA a adopter le statut, soit de définir ledit statut dans la loi. Le législateur n'a en revanche apporté aucune modification à la LCPPG, l'art. 18 de cette loi ne mentionnant pas l'adoption du statut du personnel. Cette disposition ne pourrait pas être interprétée comme une base légale générale dès lors que le législateur a fait référence au règlement interne prévu à l'art. 6 al. 4 LCPPG, soit le règlement fixant la durée des prêts.
+
+2.1. Une décision est arbitraire lorsqu'elle viole gravement une norme ou un principe juridique clair et indiscuté, ou lorsqu'elle contredit d'une manière choquante le sentiment de la justice et de l'équité. Le Tribunal fédéral n'a pas à déterminer quelle est l'interprétation correcte que l'autorité cantonale aurait dû donner des dispositions applicables; il doit uniquement examiner si l'interprétation qui a été faite est défendable. Il ne s'écarte de la solution retenue que si celle-ci apparaît insoutenable ou en contradiction manifeste avec la situation effective, ou encore si elle a été adoptée sans motifs objectifs et en violation d'un droit certain. En outre, il ne suffit pas que les motifs de la décision critiquée soient insoutenables, encore faut-il que celle-ci soit arbitraire dans son résultat. Si l'application de la loi défendue par l'autorité cantonale ne se révèle pas déraisonnable ou manifestement contraire au sens et au but de la disposition ou de la législation en cause, cette interprétation sera confirmée, même si une autre solution paraît également concevable, voire préférable (ATF 152 I 142 consid. 4.1; 151 I 337 consid. 6.1; 148 I 145 consid. 6.1).
+
+2.2. La LOIDP règle l'organisation des institutions décentralisées cantonales de droit public (art. 1 LOIDP). La CPPG en fait partie (art. 2 let. h LOIDP). Selon l'art. 12 al. 2 LOIDP, lorsque la loi ou le règlement le prévoit, l'institution peut adopter des prescriptions autonomes. Selon l'art. 11 al. 2 let. f LCPPG, le conseil d'administration est appelé à adopter un ou plusieurs règlements internes en application de l'art. 18; cette dernière disposition a la teneur suivante: "Un ou plusieurs règlements internes, adoptés par le conseil d'administration et approuvés par le Conseil d'État, fixent toutes les dispositions relatives au fonctionnement de la caisse et aux conditions particulières de ses opérations".
+
+2.3. La loi s'interprète en premier lieu selon sa lettre (interprétation littérale). Si le texte se prête à plusieurs interprétations, s'il y a de sérieuses raisons de penser qu'il ne correspond pas à la volonté du législateur, il convient de rechercher sa véritable portée au regard notamment des travaux préparatoires (interprétation historique), du but de la règle, de son esprit, ainsi que des valeurs sur lesquelles elle repose, singulièrement de l'intérêt protégé (interprétation téléologique) ou encore de sa relation avec d'autres dispositions légales (interprétation systématique). Lorsqu'il est appelé à interpréter une loi, le Tribunal fédéral adopte une position pragmatique en suivant ces différentes interprétations, sans les soumettre à un ordre de priorité (ATF 152 III 38 consid. 3.4.1; 151 III 62 consid. 7.3).
+
+2.4. En l'occurrence, une interprétation littérale conduit à admettre que les art. 11 al. 1 let. f et 18 LCPPG confèrent au conseil d'administration de la caisse un large pouvoir réglementaire s'agissant non seulement des opérations de la CPPG, mais également de son organisation interne. L'art. 18 évoque en effet "
+toutes les dispositions relatives au fonctionnement de la caisse". Ainsi défini, ce pouvoir réglementaire peut s'étendre au statut du personnel dès lors que ce domaine peut être compris sans arbitraire comme relevant du fonctionnement de l'institution.
+
+Le recourant tente une interprétation systématique en relevant que le législateur genevois, lors de l'adoption de l'art. 29 LOIDP en mai 2018, a précisé dans les lois relatives à différents établissements le pouvoir de leur conseil d'administration pour adopter le statut du personnel; il a aussi expressément prévu le statut privé du personnel dans d'autres lois; la LCPPG ne serait pas concernée par ces dispositions et le recourant y voit un silence qualifié, excluant la compétence du CA pour adopter le statut du personnel. L'intimée relève que les modifications législatives adoptées parallèlement à la LOIDP n'ont pas eu pour effet de modifier les compétences des conseils d'administration concernés. S'agissant de la CPPG, la loi de 1929 prévoyait déjà l'adoption d'un règlement du CA fixant les dispositions relatives à l'administration de la caisse. Sur cette base, le CA a adopté dès l'origine un statut prévoyant la soumission au droit privé des rapports de travail. Tel est notamment le cas du statut du personnel de 1994, encore en vigueur. Contrairement à ce que prétend le recourant, l'absence de mention spécifique du législateur en 2018 peut tout autant se comprendre comme résultant d'une volonté de ne pas modifier la situation sur ce point.
+
+Le recourant se livre enfin à une interprétation "théologique" (recte: téléologique) en relevant que le législateur aurait changé l'expression "règlement organique" par "règlement interne" aux art. 6 al. 4 et 18 LCPPG, visant ainsi l'organisation de la caisse du point de vue purement "technique". Rien ne permet toutefois de supposer que la réglementation visée à l'art. 18 LCPPG serait limitée à cette question, puisque celle-ci, en prévoyant "un ou plusieurs règlements" portant sur "toutes les dispositions", peut s'entendre, comme on l'a vu, dans un sens beaucoup plus large.
+
+2.5. L'arrêt attaqué n'est ainsi arbitraire ni dans ses motifs, ni dans son résultat. Cela conduit également au rejet du grief relatif au principe de séparation des pouvoirs.
+
+3.
+
+Le recours est par conséquent rejeté, aux frais de son auteur (art. 66 al. 1 LTF). Conformément à l'art. 68 al. 3 LTF, il n'est pas alloué de dépens.
+
+Par ces motifs, le Tribunal fédéral prononce :
+
+1.
+
+Le recours est rejeté.
+
+2.
+
+Les frais judiciaires, arrêtés à 2'000 fr., sont mis à la charge du recourant. Il n'est pas alloué de dépens.
+
+3.
+
+Le présent arrêt est communiqué aux mandataires des parties, à la Cour de justice de la République et canton de Genève, Chambre administrative ainsi qu'à la Caisse de chômage SYNA.
+
+Lausanne, le 8 septembre 2026
+
+Au nom de la Ire Cour de droit public
+
+du Tribunal fédéral suisse
+
+Le Président : Haag
+
+Le Greffier : Kurz

@@ -1,0 +1,31 @@
+# Two ways to run:
+#   1) LLM_BASE_URL set (e.g. an Apertus endpoint inside the organisation): only the app starts.
+#   2) LLM_BASE_URL empty: profile "airgap" also starts llama.cpp with local Apertus weights from ./models.
+#      The model container sits on an internal network with no route to the internet.
+services:
+  app:
+    build: .
+    ports: ["127.0.0.1:8000:8000"]
+    environment:
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://apertus:8080/v1}
+      LLM_NAME: ${LLM_NAME:-swiss-ai/Apertus-v1.5-8B}
+      LLM_API_KEY: ${LLM_API_KEY:-none}
+      LLM_DISABLE_THINKING: ${LLM_DISABLE_THINKING:-1}
+    volumes:
+      - ./outputs:/app/outputs
+    networks: [court, frontdoor]
+
+  apertus:
+    profiles: ["airgap"]
+    image: ghcr.io/ggml-org/llama.cpp:server-b11459
+    command: >
+      -m /models/${GGUF_FILE:-apertus-v1.5-8b-text-q4_k_m.gguf}
+      --host 0.0.0.0 --port 8080 -c 16384 --jinja -np 2
+    volumes:
+      - ./models:/models:ro
+    networks: [court]
+
+networks:
+  court:
+    internal: true   # Apertus sits only here: no route to the internet
+  frontdoor: {}      # publishes the review screen on localhost:8000

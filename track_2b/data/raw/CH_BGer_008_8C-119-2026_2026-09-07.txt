@@ -1,0 +1,113 @@
+8C_119/2026
+
+Arrêt du 7 septembre 2026
+
+IVe Cour de droit public
+
+Composition
+
+Mmes et M. les Juges fédéraux
+
+Viscione, Présidente,
+
+Scherrer Reber et Métral.
+
+Greffière : Mme Castella.
+
+Participants à la procédure
+
+A.________,
+
+représenté par Me Romain Riether, avocat,
+
+recourant,
+
+contre
+
+Caisse nationale suisse d'assurance en cas d'accidents (CNA), Division juridique, Fluhmattstrasse 1, 6002 Lucerne,
+
+intimée.
+
+Objet
+
+Assurance-accidents (lien de causalité),
+
+recours contre l'arrêt de la Cour de justice de la République et canton de Genève du 18 décembre 2025 (A/3193/2025 ATAS/1029/2025).
+
+Faits :
+
+A.
+
+A.a. A.________, né en 1964, travaillait en qualité de machiniste pour le compte de la société B.________ SA. À ce titre, il était assuré contre le risque d'accident auprès de la Caisse nationale suisse d'assurance en cas d'accidents (CNA).
+
+Le 25 août 2019, le prénommé a été victime d'un accident de la circulation. Alors qu'il se déplaçait sur sa moto, une voiture lui a coupé la route et a entraîné sa chute. Selon le rapport de consultation des urgences de l'Hôpital C.________ du 26 août 2019, l'assuré a subi un traumatisme de la jambe gauche, un traumatisme du poignet droit, un traumatisme cervical, ainsi qu'un traumatisme des deux pouces.
+
+Le 10 septembre 2021, l'assuré a été victime d'un second accident de la circulation, lors duquel il a subi des lésions au niveau des métacarpes à gauche ainsi qu'au niveau de l'épaule droite.
+
+A.b. Par décision du 23 novembre 2023, la CNA a mis fin, au 21 octobre 2023, à la prise en charge des troubles cognitifs de I'assuré, tels que les difficultés mnésiques et le manque de mots, considérant qu'ils n'étaient pas en lien de causalité avec les accidents. Saisie d'une opposition, elle a confié un mandat d'expertise au docteur D.________, spécialiste en neurologie. Se fondant sur les conclusions du rapport d'expertise établi le 29 novembre 2024, la CNA a rejeté l'opposition par décision du 9 juillet 2025.
+
+B.
+
+Par arrêt du 18 décembre 2025, la Chambre des assurances sociales de la Cour de justice de la République et canton de Genève a rejeté le recours de l'assuré.
+
+C.
+
+A.________ forme un recours en matière de droit public contre cet arrêt, dont il demande l'annulation, en concluant au renvoi de la cause à l'instance précédente pour qu'elle ordonne une expertise pluridisciplinaire tendant à déterminer la cause de ses limitations fonctionnelles, puis qu'elle rende une nouvelle décision.
+
+L'intimée conclut au rejet du recours. La juridiction cantonale et l'Office fédéral de la santé publique ne se sont pas déterminés.
+
+Considérant en droit :
+
+1.
+
+Le recours est dirigé contre un arrêt final (art. 90 LTF) rendu en matière de droit public (art. 82 ss LTF) par une autorité cantonale de dernière instance (art. 86 al. 1 let. d LTF). Il a été déposé dans le délai (art. 100 LTF) et la forme (art. 42 LTF) prévus par la loi. Il est donc recevable.
+
+2.
+
+Le litige porte sur le droit du recourant à des prestations d'assurance en raison de ses troubles cognitifs persistant au-delà du 21 octobre 2023. Les prestations en question pouvant être en espèces et en nature, le Tribunal fédéral n'est pas lié par les faits établis par l'autorité précédente (cf. art. 97 al. 2 et 105 al. 3 LTF) en ce qui concerne les faits pertinents pour les prestations en espèces et ceux communs aux deux types de prestations (arrêt 8C_142/2026 du 13 août 2026 consid. 2 et l'arrêt cité).
+
+3.
+
+L'arrêt entrepris expose de manière complète les dispositions légales et les principes jurisprudentiels applicables notamment à l'allocation de prestations de l'assurance-accidents (art. 6 ss LAA), à l'exigence d'un lien de causalité naturelle et adéquate entre l'événement dommageable et l'atteinte à la santé ainsi qu'à l'appréciation des rapports médicaux et au degré de la preuve requis en matière d'assurances sociales (cf. consid. 3 à 8 de l'arrêt entrepris). Il suffit d'y renvoyer.
+
+4.
+
+Après avoir retenu que, sur le plan formel, le rapport d'expertise du docteur D.________ répondait à tous les réquisits jurisprudentiels pour se voir reconnaître une pleine valeur probante, la cour cantonale a examiné le contenu de ce rapport et l'a confronté aux autres avis médicaux du dossier. Elle a conclu, en résumé, que les médecins et les neuropsychologues s'accordaient sur le fait que le traumatisme cranio-cérébral subi le 25 août 2019 ne pouvait être que léger. Les appréciations différaient en ce que l'expert et le médecin conseil de l'intimée estimaient qu'un traumatisme léger ne pouvait pas avoir les conséquences cognitives décrites par le recourant au-delà du mois d'octobre 2023, alors que le médecin traitant du recourant, le docteur E.________, médecin praticien, et la neuropsychologue F.________ considéraient qu'il n'était pas exclu qu'un traumatisme léger pût avoir de telles conséquences. Néanmoins, bien que citant des articles de doctrine médicale, ces derniers n'établissaient pas une comparaison pertinente et convaincante avec le cas d'espèce ni ne rendaient vraisemblable que le traumatisme cranio-cérébral dont avait souffert le recourant était responsable des troubles cognitifs persistants. Au vu de la divergence consacrée par la jurisprudence entre un mandat thérapeutique et un mandat d'expertise (référence faite à l'ATF 124 I 170 consid. 4 en particulier), les juges cantonaux ont considéré qu'il ne se justifiait pas de remettre en cause l'expertise ordonnée par l'intimée et de procéder à de nouvelles investigations du seul fait d'une opinion contradictoire. Il n'en allait différemment que si les médecins traitants faisaient état d'éléments objectivement vérifiables ayant été ignorés dans le cadre de l'expertise et qui étaient suffisamment pertinents pour remettre en cause les conclusions de l'expert (cf. arrêt 8C_755/2020 du 19 avril 2021 consid. 3.2 et les références), ce qui n'était pas le cas en l'espèce.
+
+5.
+
+Le recourant invoque la violation des art. 6 al. 1 LAA et 61 let. c LPGA, ainsi que des art. 9 Cst. en lien avec l'art. 29 al. 2 Cst. et 6 par. 1 CEDH. Citant divers passages, en fait et en droit, de l'arrêt attaqué, il fait valoir que l'expert a déclaré ne pas être en mesure de se déterminer sur d'éventuels troubles neuropsychologiques, alors que la neuropsychologue F.________ a constaté qu'il souffrait effectivement de troubles cohérents avec un traumatisme cranio-cérébral et renvoyé à la littérature médicale récente qui reconnaît la possibilité d'un lien de causalité entre ce type de troubles et un traumatisme cranio-cérébral. Or c'était précisément afin d'établir la cause de ses limitations fonctionnelles que le recourant avait demandé la mise en oeuvre d'une expertise pluridisciplinaire (sur les plans neurologique, psychologique, psychiatrique et neuropsychologique). Aussi la cour cantonale ne pouvait-elle pas refuser la mesure d'instruction requise et opposer au recourant que le lien de causalité entre l'accident et les troubles neuropsychologiques n'avait pas pu être démontré. La position de la cour cantonale serait d'autant plus arbitraire qu'elle aurait retenu que le recourant était invalide à 100 % depuis l'accident. En l'absence d'explications sur les causes de l'invalidité survenue à la date de l'accident, la cour cantonale ne pouvait pas refuser d'instruire l'origine des troubles dont il souffrait.
+
+6.
+
+Les griefs sont mal fondés. En effet, il est constant que le recourant a été suivi sur le plan neuropsychologique. Or si ni le médecin traitant, ni la neuropsychologue ou un autre un médecin n'ont pu établir, au degré de la vraisemblance prépondérante, que l'accident, respectivement le traumatisme cranio-cérébral subi à cette occasion, était responsable des troubles cognitifs du recourant persistant au-delà du mois d'octobre 2023, la cour cantonale n'était pas tenue d'instruire plus avant la question. On rappellera que la seule possibilité d'une origine accidentelle des troubles ne suffit pas. Par ailleurs, les juges cantonaux n'ont aucunement retenu que le recourant était invalide à 100 % depuis l'accident. Au considérant cité par le recourant sur ce point (consid. C.c), ils se sont limités à mentionner une décision de l'office de l'assurance-invalidité octroyant une rente entière d'invalidité à partir du 1er juin 2024. Ensuite, comme ils l'ont exposé dans les considérants en droit de l'arrêt, l'appréciation de l'office de l'assurance-invalidité est globale et ne se limite pas aux conséquences des accidents assurés. En conclusion, le recourant échoue à démontrer que la cour cantonale aurait violé les dispositions susmentionnées en statuant sur la base du dossier - à savoir en se ralliant aux conclusions du rapport d'expertise - sans juger nécessaire de compléter l'instruction.
+
+7.
+
+Il s'ensuit que le recours est mal fondé et doit être rejeté.
+
+Le recourant, qui succombe, supportera les frais de la procédure (art. 66 al. 1 LTF).
+
+Par ces motifs, le Tribunal fédéral prononce :
+
+1.
+
+Le recours est rejeté.
+
+2.
+
+Les frais judiciaires, arrêtés à 800 fr., sont mis à la charge du recourant.
+
+3.
+
+Le présent arrêt est communiqué aux parties, à la Chambre des assurances sociales de la Cour de justice de la République et canton de Genève et à l'Office fédéral de la santé publique.
+
+Lucerne, le 7 septembre 2026
+
+Au nom de la IVe Cour de droit public
+
+du Tribunal fédéral suisse
+
+La Présidente : Viscione
+
+La Greffière : Castella

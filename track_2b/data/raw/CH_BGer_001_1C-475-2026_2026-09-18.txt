@@ -1,0 +1,96 @@
+1C_475/2026
+
+Arrêt du 18 septembre 2026
+
+Ire Cour de droit public
+
+Composition
+
+MM. les Juges fédéraux Kneubühler, Juge présidant,
+
+Chaix et Müller.
+
+Greffière : Mme Rouiller.
+
+Participants à la procédure
+
+1. A.________,
+
+2. B.________,
+
+tous les deux représentés par Me Stéphane Grodecki, avocat,
+
+recourants,
+
+contre
+
+Ministère public de la Confédération,
+
+Guisanplatz 1, 3003 Berne.
+
+Objet
+
+Entraide judiciaire internationale en matière pénale à l'Ukraine; remise de moyens de preuve,
+
+recours contre l'arrêt de la Cour des plaintes du Tribunal pénal fédéral du 26 août 2026 (RR.2025.198-199).
+
+Faits :
+
+A.
+
+Par décision de clôture du 7 novembre 2025, le Ministère public de la Confédération (ci-après : MPC) a ordonné la transmission aux autorités ukrainiennes de documents bancaires concernant A.________ et B.________. Le MPC faisait suite à une demande d'entraide judiciaire formée dans le cadre d'une procédure pénale ouverte notamment contre A.________ pour blanchiment d'argent. Il a au surplus déclaré la demande d'entraide irrecevable s'agissant d'une infraction de soustraction d'impôts et de prélèvements obligatoires.
+
+B.
+
+Par arrêt du 26 août 2026, la Cour des plaintes du Tribunal pénal fédéral (ci-après : TPF) a rejeté le recours d'A.________ et B.________ contre la décision du 7 novembre 2025. Elle a notamment considéré que A.________ et B.________ n'étaient pas habilités à se prévaloir de l'art. 2 EIMP (RS 351.1) et que leurs allégations quant à la situation en Ukraine ne suffisaient pas à remettre en cause l'entraide avec ce pays.
+
+C.
+
+Agissant par la voie du recours en matière de droit public, A.________ et B.________ demandent principalement au Tribunal fédéral d'annuler l'arrêt de la Cour des plaintes, ainsi que la décision de clôture du 7 novembre 2025, et de réformer cette dernière en ce sens que la demande d'entraide du 17 août 2020 est déclarée irrecevable en son entier. Subsidiairement, ils concluent au renvoi de la cause à l'instance précédente pour nouvelle décision dans le sens des considérants, précédée d'un tri des pièces. Ils demandent également la suspension de la procédure d'entraide jusqu'à la fin de la guerre en Ukraine.
+
+Il n'a pas été demandé de réponse.
+
+Considérant en droit :
+
+1.
+
+Selon l'art. 84 LTF, le recours en matière de droit public est recevable à l'encontre d'un arrêt du Tribunal pénal fédéral en matière d'entraide judiciaire internationale si celui-ci a pour objet notamment une saisie de valeurs et s'il concerne un cas particulièrement important (al. 1). Un cas est particulièrement important notamment lorsqu'il y a des raisons de supposer que la procédure à l'étranger viole des principes fondamentaux ou comporte d'autres vices graves (al. 2). Ces motifs d'entrée en matière ne sont toutefois pas exhaustifs et le Tribunal fédéral peut être appelé à intervenir lorsqu'il s'agit de trancher une question juridique de principe, lorsque l'instance précédente s'est écartée de la jurisprudence suivie jusque-là (ATF 142 IV 250 consid. 1.3), ou lorsqu'un droit de partie, notamment le droit d'être entendu dans la procédure d'entraide, a été manifestement et gravement violé (ATF 145 IV 99 consid. 1.5). En vertu de l'art. 42 al. 2 LTF, il incombe à la partie recourante de démontrer que les conditions d'entrée en matière posées à l'art. 84 LTF sont réunies (ATF 139 IV 294 consid. 1.1). En particulier, il ne suffit pas d'invoquer des violations des droits fondamentaux de procédure pour justifier l'entrée en matière; seule une violation importante, suffisamment détaillée et crédible peut conduire, le cas échéant, à considérer que la condition de recevabilité posée à l'art. 84 al. 1
+in fine LTF est réalisée (ATF 145 IV 99 consid. 1.5).
+
+1.1. La décision de clôture du Ministère public porte sur la transmission à l'autorité requérante de renseignements bancaires concernant les recourants. La première condition posée à l'art. 84 al. 1 LTF est ainsi réalisée.
+
+1.2. S'agissant de la seconde, les recourants soutiennent que le système judiciaire en Ukraine, où la loi martiale est renouvelée en continu depuis 4 ans, est corrompu et ne présente pas les garanties d'indépendance nécessaires pour se voir accorder l'entraide. Selon les recourants, savoir si l'Ukraine doit, compte tenu de la situation actuelle, bénéficier d'une présomption de respect des garanties fondamentales constitue non seulement une question juridique de principe, mais également un cas particulièrement important dès lors que le renversement de cette présomption conduirait le TPF à examiner le danger encouru par les recourants.
+
+1.2.1. Les recourants se plaignent exclusivement d'une violation de l'art. 2 EIMP. Cependant, et comme cela est rappelé dans l'arrêt attaqué, les recourants n'ont pas qualité pour invoquer l'art. 2 EIMP. D'une part, B.________ n'est pas inculpée dans la procédure ukrainienne et ne peut dès lors se prévaloir de cet article (cf. ATF 126 II 258 consid. 2d/aa; arrêt 1C_101/2024 du 15 février 2024 consid. 1.3; SARAH SUMMERS, in Basler Kommentar, Internationales Strafrecht, 2015, n o 4 ad art. 2 EIMP; ROBERT ZIMMERMANN, La coopération judiciaire internationale en matière pénale, 6e éd. 2024, n o 651). D'autre part, les recourants ne prétendent pas résider en Ukraine. Or, et contrairement à ce que les recourants soutiennent, cette condition est, de jurisprudence constante, nécessaire pour être habilité à se prévaloir de l'art. 2 EIMP lorsque la demande d'entraide porte sur la remise de documents (cf. ATF 149 IV 376 consid. 3.5; 130 II 217 consid. 8.2; 125 II 356 consid. 8b). L'argumentation développée à ce propos ne justifie dès lors pas une entrée en matière, les seules allégations des recourants que le système judiciaire ukrainien est déficient et manque d'indépendance ne suffisant pas à faire du cas d'espèce un cas particulièrement important.
+
+Au surplus, le Tribunal fédéral a, de jurisprudence constante, régulièrement confirmé des demandes d'entraide avec l'Ukraine depuis 2022 (cf. notamment arrêts 1C_98/2026 du 27 février 2026 consid. 1; 1C_17/2026 du 19 janvier 2026 consid. 1.2, qui rappelle que la Suisse et l'Ukraine sont liées par des accords de droit international public; 1C_696/2025 du 1er décembre 2025 consid. 2.2, qui relève que le principe de confiance mutuelle s'applique dans les relations entre la Suisse et l'Ukraine; 1C_370/2024 du 27 juin 2024 consid. 1.2). Il ne saurait dès lors être retenu que l'octroi de l'entraide à l'Ukraine, sur la base du principe de la confiance, constitue une question juridique de principe.
+
+2.
+
+Au vu de ce qui précède, la présente cause ne constitue pas une question juridique de principe et ne présente pas une importance particulière au regard de l'art. 84 LTF, dont il convient de rappeler que le but est de limiter fortement l'accès au Tribunal fédéral dans le domaine de l'entraide judiciaire, en ne permettant de recourir que dans un nombre limité de cas jugés particulièrement importants (ATF 145 IV 99 consid. 1.2 et les références).
+
+Il s'ensuit que le recours est irrecevable. L'octroi d'un délai supplémentaire au sens de l'art. 43 LTF ne se justifie donc pas. Conformément à l'art. 66 al. 1 LTF, les frais judiciaires sont mis à la charge des recourants qui succombent. Le présent arrêt, qui rend également sans objet la demande de suspension de la procédure d'entraide, est rendu selon la procédure simplifiée prévue à l'art. 109 al. 1 LTF.
+
+Par ces motifs, le Tribunal fédéral prononce :
+
+1.
+
+Le recours est irrecevable.
+
+2.
+
+Les frais judiciaires, arrêtés à 2'000 fr., sont mis à la charge des recourants.
+
+3.
+
+Le présent arrêt est communiqué au mandataire des recourants, au Ministère public de la Confédération, à la Cour des plaintes du Tribunal pénal fédéral et à l'Unité Entraide judiciaire de l'Office fédéral de la justice.
+
+Lausanne, le 18 septembre 2026
+
+Au nom de la Ire Cour de droit public
+
+du Tribunal fédéral suisse
+
+Le Juge présidant : Kneubühler
+
+La Greffière : Rouiller
