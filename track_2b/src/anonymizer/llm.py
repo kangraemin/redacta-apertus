@@ -43,7 +43,8 @@ PUBLIC_ROLE_WORDS = ("judge", "juge", "giudic", "richter", "clerk", "greff", "ca
 
 
 def role_redacts(role: str) -> bool:
-    r = role.lower()
+    # "recourant(e)" (appellant) contains "cour" (court): read it as a party before the substring test
+    r = re.sub(r"recour\w*", "party", role.lower())
     if r in REDACT_ROLES:
         return True
     return not any(w in r for w in PUBLIC_ROLE_WORDS)

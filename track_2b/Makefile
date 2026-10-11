@@ -22,15 +22,20 @@ run:
 	fi
 
 # Measure accuracy on the benchmark (test split). Results land in outputs/eval_<mode>/.
+# Uses LLM_BASE_URL if set, otherwise starts the local Apertus container (air-gapped mode).
+EVAL_RUN = docker compose $(if $(LLM_BASE_URL),,--profile airgap) run --rm --build -e LLM_CACHE_DIR=/app/outputs/llm_cache app
+
 eval:
 	@mkdir -p outputs
-	docker compose run --rm --build app python -m src.evaluate --mode full --split test --out outputs/eval_full $(EVAL_ARGS)
+	@if [ -z "$$LLM_BASE_URL" ]; then LLM_BASE_URL= docker compose --profile airgap up -d apertus; fi
+	$(EVAL_RUN) python -m src.evaluate --mode full --split test --out outputs/eval_full $(EVAL_ARGS)
 
 eval-all:
 	@mkdir -p outputs
-	docker compose run --rm --build app sh -c "python -m src.evaluate --mode rules --out outputs/eval_rules && \
-		python -m src.evaluate --mode apertus --out outputs/eval_apertus && \
-		python -m src.evaluate --mode full --out outputs/eval_full"
+	@if [ -z "$$LLM_BASE_URL" ]; then LLM_BASE_URL= docker compose --profile airgap up -d apertus; fi
+	$(EVAL_RUN) python -m src.evaluate --mode rules --out outputs/eval_rules
+	$(EVAL_RUN) python -m src.evaluate --mode full --out outputs/eval_full
+	$(EVAL_RUN) python -m src.evaluate --mode apertus --out outputs/eval_apertus
 
 # Rebuild the benchmark from the downloaded decisions (data/raw -> data/benchmark).
 benchmark:
