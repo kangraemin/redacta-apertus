@@ -14,16 +14,25 @@ services:
     volumes:
       - ./outputs:/app/outputs
     networks: [court, frontdoor]
+    depends_on:
+      apertus:
+        condition: service_healthy
+        required: false
 
   apertus:
     profiles: ["airgap"]
     image: ghcr.io/ggml-org/llama.cpp:server-b11459
     command: >
       -m /models/${GGUF_FILE:-apertus-v1.5-8b-text-q4_k_m.gguf}
-      --host 0.0.0.0 --port 8080 -c 16384 --jinja -np 2
+      --host 0.0.0.0 --port 8080 -c 8192 --jinja -np 1 --cache-ram 0
     volumes:
       - ./models:/models:ro
     networks: [court]
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8080/health"]
+      interval: 5s
+      retries: 60
 
 networks:
   court:

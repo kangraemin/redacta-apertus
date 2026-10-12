@@ -73,7 +73,14 @@ def worker():
         doc["status"] = "analysing"
         t0 = time.time()
         try:
-            res = anonymize(doc["text"], llm=llm)
+            for attempt in range(4):  # the model container may still be (re)starting
+                try:
+                    res = anonymize(doc["text"], llm=llm)
+                    break
+                except Exception:  # noqa: BLE001
+                    if attempt == 3:
+                        raise
+                    time.sleep(20)
             doc["result"] = res
             doc["status"] = "ready"
             save(doc)
