@@ -23,10 +23,22 @@ def covered(span, red):
     return hit / max(1, len(need))
 
 
+DOB_CUE = re.compile(r"^(?:geboren(?:\s+am)?|geb\.|né(?:e)?\s+le|nat[oa]\s+il|n\.)\s+")
+
+
+def scored_span(g):
+    """Birth dates: the cue word ("geboren am") stays readable, only the date must be covered."""
+    if g["type"] == "DATE_OF_BIRTH":
+        m = DOB_CUE.match(g["text"])
+        if m:
+            return g["start"] + m.end(), g["end"]
+    return g["start"], g["end"]
+
+
 def score_doc(row, entities):
     red = [(s, t) for e in entities if e["decision"] == "redact" for s, t in e["mentions"]]
     gold = row["gold"]
-    found = [covered((g["start"], g["end"]), red) >= 0.9 for g in gold]
+    found = [covered(scored_span(g), red) >= 0.9 for g in gold]
     tp_pred = fp_pred = 0
     fps = []
     for s, t in red:

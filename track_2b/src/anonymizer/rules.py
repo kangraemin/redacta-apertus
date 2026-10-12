@@ -32,12 +32,13 @@ PATTERNS = [
     ("PHONE", re.compile(r"(?:\+41|0041|\b0)\s?\(?\d{2}\)?[\s.]?\d{3}[\s.]?\d{2}[\s.]?\d{2}\b")),
     ("PLATE", re.compile(r"\b(?:AG|AI|AR|BE|BL|BS|FR|GE|GL|GR|JU|LU|NE|NW|OW|SG|SH|SO|SZ|TG|TI|UR|VD|VS|ZG|ZH)"
                          r"\s?\d{1,3}[ ']?\d{3}\b")),
-    ("DATE_OF_BIRTH", re.compile(rf"\b(?:geboren(?:\s+am)?|geb\.|né(?:e)?\s+le|nat[oa]\s+il|n\.)\s+{_DATE}")),
+    # the cue word stays readable ("geboren am […]"); only the date itself is the hit (group "v")
+    ("DATE_OF_BIRTH", re.compile(rf"\b(?:geboren(?:\s+am)?|geb\.|né(?:e)?\s+le|nat[oa]\s+il|n\.)\s+(?P<v>{_DATE})")),
     ("ADDRESS", re.compile(
         rf"(?:\b[A-ZÄÖÜ][a-zäöüß]+(?:-)?{_STREET_WORDS}\s+\d{{1,4}}[a-z]?"
         rf"|\b{_STREET_PREFIX}\s+(?:[dD]e(?:s|\sla|\sl')?\s|du\s|d'|de\s|dei\s|del(?:la)?\s|ai\s|al\s)?"
         rf"[A-ZÀ-Ý][\wÀ-ÿ'-]*(?:\s[A-ZÀ-Ý][\wÀ-ÿ'-]*){{0,2}}\s+\d{{1,4}}[a-z]?)"
-        rf"(?:,\s*(?:CH-)?\d{{4}}\s+(?:St\.\s)?[A-ZÀ-Ý][\wÀ-ÿ-]*(?:\s(?:bei|sur|près|[A-ZÀ-Ý][\wÀ-ÿ-]*))?)?")),
+        rf"(?:,\s*(?:CH-)?\d{{4}}\s+(?:St\.\s)?[A-ZÀ-Ý][\wÀ-ÿ-]*(?:\s(?:bei|sur|près)\s[A-ZÀ-Ý][\wÀ-ÿ-]*|\s[A-ZÀ-Ý][\wÀ-ÿ-]*)?)?")),
 ]
 
 # Titles that announce a public role: the name after them stays in the published decision.
@@ -68,7 +69,8 @@ def find(text: str):
     hits = []
     for kind, rx in PATTERNS:
         for m in rx.finditer(text):
-            hits.append(Hit(m.start(), m.end(), kind, m.group(0)))
+            g = "v" if "v" in rx.groupindex else 0
+            hits.append(Hit(m.start(g), m.end(g), kind, m.group(g)))
     hits.sort(key=lambda h: (h.start, -(h.end - h.start)))
     out, last_end = [], -1
     for h in hits:  # drop hits nested in a longer one

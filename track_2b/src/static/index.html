@@ -3,181 +3,284 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Redacta — decision review</title>
+<title>Redacta</title>
 <style>
-  /* no web fonts or CDNs: the screen must work inside a court network without internet */
+  /* No web fonts, no CDN: the screen runs inside a court network without internet.
+     Document text uses the serif the workstation already has; the interface uses Helvetica/Arial. */
   :root {
-    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1f23; --muted: #6b6f76; --line: #e2dfd7;
-    --red: #b42318; --red-bg: #fde8e6; --amber: #a15c07; --amber-bg: #fdf1dc;
-    --blue: #1f4e8c; --blue-bg: #e8eef8; --green: #1e6b3a; --green-bg: #e3f2e8;
-    --accent: #7a1c1c;
+    --ground: #e7e7e4;     /* desk behind the page */
+    --page: #ffffff;
+    --pane: #f7f7f6;
+    --ink: #1e1e1e;
+    --ink-2: #555553;
+    --ink-3: #8a8a87;
+    --rule: #cfcfcb;
+    --rule-soft: #e2e2df;
+    --red: #9e1b22;        /* the only accent: redaction and the approve action */
+    --red-wash: #f6e3e3;
+    --mark: #fbe98a;       /* highlighter for items the clerk still has to decide */
+    --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text", Cambria, Georgia, serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-         font: 14px/1.45 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-  header { display: flex; align-items: center; gap: 16px; padding: 10px 20px; background: #1d1f23; color: #fff; }
-  header .brand { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
-  header .brand span { color: #f0b3a8; }
-  header .tag { font-size: 12px; padding: 3px 9px; border-radius: 99px; background: #33363c; color: #d8dadf; }
-  header .tag.ok { background: #1e4d33; color: #c8f0d6; }
-  header .grow { flex: 1; }
-  header input { background: #33363c; border: 1px solid #4a4e55; color: #fff; border-radius: 6px; padding: 5px 8px; width: 150px; }
-  main { display: grid; grid-template-columns: 250px 1fr 360px; height: calc(100vh - 50px); }
-  aside, section { overflow: auto; }
-  #list { border-right: 1px solid var(--line); background: var(--panel); }
-  #list h3, #side h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 16px 16px 8px; }
-  .doc { padding: 9px 16px; cursor: pointer; border-left: 3px solid transparent; }
-  .doc:hover { background: #faf9f6; }
-  .doc.active { background: #f3efe6; border-left-color: var(--accent); }
-  .doc .t { font-weight: 600; font-size: 13px; }
-  .doc .m { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-top: 2px; }
-  .lang { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; background: #ece9e1; color: #555; }
-  .st-analysing { color: var(--amber); } .st-ready { color: var(--muted); } .st-error { color: var(--red); }
-  .st-approved { color: var(--green); font-weight: 600; }
-  .btn { border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 7px 12px; cursor: pointer; font: inherit; }
-  .btn:hover { background: #faf9f6; }
-  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
-  .btn.primary:disabled { opacity: .45; cursor: not-allowed; }
-  #pastebtn { margin: 12px 16px; width: calc(100% - 32px); }
-  #doc { padding: 0 34px 60px; }
-  .toolbar { position: sticky; top: 0; background: var(--bg); padding: 14px 0 10px; display: flex; gap: 8px; align-items: center; z-index: 2; border-bottom: 1px solid var(--line); }
-  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
-  .seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; font: inherit; }
-  .seg button.on { background: #1d1f23; color: #fff; }
-  .legend { font-size: 12px; color: var(--muted); display: flex; gap: 12px; margin-left: auto; }
-  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
-  #text { white-space: pre-wrap; font: 15px/1.65 Georgia, "Times New Roman", serif; max-width: 820px; margin-top: 18px;
-          background: var(--panel); padding: 28px 36px; border: 1px solid var(--line); border-radius: 10px; }
-  mark { cursor: pointer; border-radius: 3px; padding: 0 1px; color: inherit; }
-  mark.redact { background: var(--red-bg); box-shadow: inset 0 -2px 0 var(--red); }
-  mark.review { background: var(--amber-bg); box-shadow: inset 0 -2px 0 var(--amber); }
-  mark.keep { background: transparent; box-shadow: inset 0 -1px 0 var(--blue); }
-  mark sup { font: 700 9px/1 -apple-system, Arial, sans-serif; color: var(--red); margin-left: 2px; }
-  mark.flash { outline: 2px solid var(--ink); }
-  .ph { background: #ece9e1; border-radius: 3px; padding: 0 2px; font-weight: 600; }
-  #side { border-left: 1px solid var(--line); background: var(--panel); }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 14px 16px 4px; }
-  .stat { border-radius: 9px; padding: 9px 10px; }
-  .stat b { display: block; font-size: 21px; line-height: 1.1; }
-  .stat span { font-size: 11px; }
-  .stat.r { background: var(--red-bg); color: var(--red); } .stat.a { background: var(--amber-bg); color: var(--amber); }
-  .stat.k { background: var(--blue-bg); color: var(--blue); }
-  .ent { margin: 0 12px 6px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; display: grid;
-         grid-template-columns: 1fr auto; gap: 2px 8px; cursor: pointer; }
-  .ent:hover { border-color: #c9c4b8; }
-  .ent .n { font-weight: 600; overflow-wrap: anywhere; }
-  .ent .r { grid-column: 1; font-size: 12px; color: var(--muted); }
-  .ent .sw { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
-  .ent.redact { border-left: 3px solid var(--red); } .ent.review { border-left: 3px solid var(--amber); background: #fffaf0; }
-  .ent.keep { border-left: 3px solid var(--blue); }
-  .pill { font: 700 10px/1 -apple-system, Arial, sans-serif; padding: 2px 5px; border-radius: 4px; background: #ece9e1; color: #555; margin-left: 4px; vertical-align: 1px; }
-  .sw select { font: inherit; font-size: 12px; padding: 3px; border-radius: 6px; border: 1px solid var(--line); background: #fff; }
-  .approve { position: sticky; bottom: 0; background: var(--panel); border-top: 1px solid var(--line); padding: 12px 16px; }
-  .approve .btn { width: 100%; padding: 10px; }
-  .approve .note { font-size: 12px; color: var(--muted); margin-top: 6px; min-height: 16px; }
-  .empty { color: var(--muted); padding: 60px 0; text-align: center; }
-  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid #e0c48f; border-top-color: var(--amber); border-radius: 50%; animation: spin 1s linear infinite; vertical-align: -2px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  dialog { border: 1px solid var(--line); border-radius: 12px; width: min(760px, 92vw); padding: 20px; }
-  dialog textarea { width: 100%; height: 340px; font: 13px/1.5 Georgia, serif; padding: 10px; border: 1px solid var(--line); border-radius: 8px; }
-  dialog .row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 13px/1.4 var(--sans);
+         display: grid; grid-template-rows: 40px 1fr 26px; }
+  button, input, textarea { font: inherit; color: inherit; }
+  kbd { font: 11px/1 var(--sans); padding: 2px 4px 1px; border: 1px solid var(--rule); border-bottom-width: 2px;
+        border-radius: 3px; background: var(--page); color: var(--ink-2); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+  /* top bar */
+  .bar { display: flex; align-items: center; gap: 18px; padding: 0 14px; background: var(--page);
+         border-bottom: 1px solid var(--rule); }
+  .bar .name { font: 700 15px/1 var(--serif); letter-spacing: .2px; }
+  .bar .what { color: var(--ink-2); }
+  .bar .ref { margin-left: 6px; padding-left: 18px; border-left: 1px solid var(--rule); font-weight: 700; }
+  .bar .grow { flex: 1; }
+  .bar label { color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+  .bar input { width: 88px; padding: 3px 6px; border: 1px solid var(--rule); border-radius: 2px; background: var(--page); }
+
+  main { display: grid; grid-template-columns: 236px minmax(0, 1fr) 408px; min-height: 0; }
+  main > * { min-height: 0; overflow: auto; }
+
+  /* decision list */
+  #list { background: var(--pane); border-right: 1px solid var(--rule); }
+  .listhead { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 8px;
+              border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--pane); }
+  .listhead b { font-size: 12px; }
+  .doc { display: grid; grid-template-columns: 1fr auto; gap: 1px 8px; padding: 7px 12px 7px 10px;
+         border-left: 3px solid transparent; border-bottom: 1px solid var(--rule-soft); cursor: pointer; }
+  .doc:hover { background: #efefed; }
+  .doc.active { background: var(--page); border-left-color: var(--red); }
+  .doc .t { font-weight: 700; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .doc .l { color: var(--ink-3); font-size: 11px; }
+  .doc .s { grid-column: 1 / -1; color: var(--ink-2); font-size: 12px; }
+  .doc .s.done { color: var(--ink); }
+  .doc .s.done::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--ink); margin-right: 6px; vertical-align: 1px; }
+  .doc .s.err { color: var(--red); }
+
+  .btn { border: 1px solid var(--rule); background: var(--page); border-radius: 2px; padding: 4px 9px; cursor: pointer; }
+  .btn:hover { border-color: var(--ink-3); }
+  .btn.go { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 700; }
+  .btn.go:hover { background: #000; }
+  .btn.go:disabled { background: var(--rule); border-color: var(--rule); color: var(--ink-2); cursor: not-allowed; }
+
+  /* document */
+  #doc { display: flex; flex-direction: column; }
+  .tabs { position: sticky; top: 0; z-index: 2; display: flex; align-items: flex-end; gap: 22px; padding: 0 28px;
+          background: var(--ground); border-bottom: 1px solid var(--rule); min-height: 38px; }
+  .tabs button { border: 0; background: none; padding: 10px 0 8px; cursor: pointer; color: var(--ink-2);
+                 border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+  .key { margin-left: auto; display: flex; gap: 16px; padding-bottom: 10px; color: var(--ink-2); font-size: 12px; }
+  .key span { white-space: nowrap; }
+  .key .sw { display: inline-block; width: 22px; height: 11px; margin-right: 5px; vertical-align: -1px; }
+  .sheet { margin: 26px auto 80px; width: min(760px, calc(100% - 48px)); background: var(--page);
+           border: 1px solid var(--rule); padding: 52px 68px 64px; }
+  #text { white-space: pre-wrap; font: 16.5px/1.62 var(--serif); hyphens: auto; }
+  mark { color: inherit; background: none; cursor: pointer; padding: 0 1px; }
+  mark.redact { background: var(--red-wash); border-bottom: 2px solid var(--red); }
+  mark.review { background: var(--mark); border-bottom: 2px solid #8c7300; }
+  mark.keep { border-bottom: 1px dotted var(--ink-3); }
+  mark { scroll-margin: 60px; }
+  mark.cur { outline: 2px solid var(--ink); outline-offset: 1px; }
+  mark sup { font: 700 10px/1 var(--sans); color: var(--red); margin-left: 2px; }
+  .ph { color: var(--red); font-weight: 700; }
+  .pb { display: block; height: .55em; }
+  .blank { margin: 18vh auto 0; width: min(440px, 90%); color: var(--ink-2); font-size: 14px; line-height: 1.6; }
+  .blank h2 { font: 400 22px/1.3 var(--serif); color: var(--ink); margin: 0 0 10px; }
+  .progress { height: 2px; background: var(--rule); overflow: hidden; margin-top: 16px; }
+  .progress i { display: block; height: 100%; width: 30%; background: var(--ink); animation: slide 1.6s ease-in-out infinite; }
+  @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+
+  /* proposals */
+  #side { background: var(--page); border-left: 1px solid var(--rule); display: flex; flex-direction: column; overflow: hidden; }
+  .counts { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
+  .counts div { padding: 8px 12px 7px; border-right: 1px solid var(--rule-soft); }
+  .counts div:last-child { border-right: 0; }
+  .counts b { font: 700 20px/1.1 var(--sans); font-variant-numeric: tabular-nums; display: block; }
+  .counts span { color: var(--ink-2); font-size: 12px; }
+  .counts .open.some b { color: var(--red); }
+  .rows { flex: 1; overflow: auto; padding-bottom: 24px; }
+  .grp { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; padding: 6px 12px 5px;
+         background: var(--pane); border-bottom: 1px solid var(--rule); border-top: 1px solid var(--rule);
+         font-weight: 700; font-size: 12px; }
+  .grp:first-child { border-top: 0; }
+  .grp span { font-weight: 400; color: var(--ink-2); }
+  .row { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 0 8px; align-items: start;
+         padding: 6px 12px 6px 10px; border-bottom: 1px solid var(--rule-soft); border-left: 2px solid transparent; cursor: pointer; }
+  .row:hover { background: #fafaf9; }
+  .row.cur { background: #f1f1ef; border-left-color: var(--ink); }
+  .row .lab { font-weight: 700; color: var(--red); font-variant-numeric: tabular-nums; padding-top: 1px; }
+  .row .n { font: 15px/1.3 var(--serif); overflow-wrap: anywhere; }
+  .row .why { color: var(--ink-2); font-size: 12px; margin-top: 1px; }
+  .row .why i { font-style: normal; color: var(--ink); }
+  .row.review .n { background: linear-gradient(transparent 55%, var(--mark) 55%); display: inline; }
+  .pick { display: inline-flex; border: 1px solid var(--rule); border-radius: 2px; margin-top: 1px; }
+  .pick button { border: 0; background: var(--page); padding: 2px 7px; cursor: pointer; font-size: 12px; color: var(--ink-2); }
+  .pick button + button { border-left: 1px solid var(--rule); }
+  .pick button.on.r { background: var(--red); color: #fff; font-weight: 700; }
+  .pick button.on.k { background: var(--ink-2); color: #fff; font-weight: 700; }
+  .none { padding: 8px 12px 10px 46px; color: var(--ink-3); border-bottom: 1px solid var(--rule-soft); }
+
+  .sign { border-top: 1px solid var(--rule); padding: 12px; background: var(--pane); }
+  .sign .btn { width: 100%; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; }
+  .sign .btn kbd { background: transparent; color: inherit; border-color: rgba(255,255,255,.5); }
+  .sign .btn:disabled kbd { border-color: var(--ink-3); }
+  .sign .note { color: var(--ink-2); font-size: 12px; margin-top: 7px; }
+  .receipt { font-size: 12px; line-height: 1.5; }
+  .receipt h4 { margin: 0 0 6px; font-size: 13px; }
+  .receipt dl { display: grid; grid-template-columns: 112px 1fr; margin: 0 0 8px; }
+  .receipt dt { color: var(--ink-2); }
+  .receipt dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .receipt a { color: var(--ink); }
+
+  .help { padding: 18px 16px; color: var(--ink-2); }
+  .help dl { display: grid; grid-template-columns: 76px 1fr; gap: 8px 6px; margin: 10px 0 0; }
+  .help dd { margin: 0; }
+  /* status line */
+  .status { display: flex; align-items: center; gap: 0; background: var(--pane); border-top: 1px solid var(--rule);
+            color: var(--ink-2); font-size: 12px; white-space: nowrap; overflow: hidden; }
+  .status > span { padding: 0 12px; border-right: 1px solid var(--rule-soft); }
+  .status .grow { flex: 1; border: 0; }
+  .status .keys { display: flex; gap: 12px; }
+
+  /* paste */
+  dialog { border: 1px solid var(--ink-3); border-radius: 0; width: min(780px, 94vw); padding: 0; color: var(--ink); }
+  dialog::backdrop { background: rgba(30, 30, 30, .35); }
+  dialog header { padding: 14px 18px 10px; border-bottom: 1px solid var(--rule); }
+  dialog header b { font-size: 14px; }
+  dialog header p { margin: 4px 0 0; color: var(--ink-2); }
+  dialog textarea { display: block; width: 100%; height: 52vh; border: 0; resize: vertical; padding: 18px 22px;
+                    font: 15px/1.55 var(--serif); outline: none; }
+  dialog footer { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-top: 1px solid var(--rule); background: var(--pane); }
+  dialog footer .grow { flex: 1; color: var(--ink-2); font-size: 12px; }
+  dialog .err { color: var(--red); }
+
+  @media (max-width: 1100px) { main { grid-template-columns: 200px minmax(0, 1fr) 340px; } .sheet { padding: 36px 36px; } .key { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .progress i { animation: none; width: 100%; } }
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">Redacta <span>·</span> decision anonymisation</div>
-  <div class="tag ok" id="model">Apertus</div>
-  <div class="tag">runs on this network only</div>
-  <div class="grow"></div>
-  <label style="font-size:12px;color:#c9ccd2">Reviewer <input id="reviewer" placeholder="your initials"></label>
-</header>
+<div class="bar">
+  <span class="name">Redacta</span>
+  <span class="what">Anonymisation of court decisions before publication</span>
+  <span class="ref" id="ref" hidden></span>
+  <span class="grow"></span>
+  <label for="reviewer">Reviewer <input id="reviewer" placeholder="initials" autocomplete="off"></label>
+</div>
 <main>
   <aside id="list">
-    <button class="btn" id="pastebtn">+ Paste a decision</button>
-    <h3>Decisions</h3>
+    <div class="listhead"><b>Decisions</b><button class="btn" id="pastebtn">Paste text</button></div>
     <div id="docs"></div>
   </aside>
-  <section id="doc"><div class="empty">Choose a decision on the left.</div></section>
-  <aside id="side"></aside>
+  <section id="doc">
+    <div class="blank"><h2>No decision open</h2>Choose one from the list, or paste the text of a new decision.
+      Apertus reads it on this machine and proposes what to redact; you confirm each item.</div>
+  </section>
+  <aside id="side"><div class="help"><b>Keys</b><dl>
+    <dt><kbd>↓</kbd> <kbd>↑</kbd></dt><dd>next and previous item</dd><dt><kbd>R</kbd></dt><dd>redact the item</dd>
+    <dt><kbd>K</kbd></dt><dd>keep it in the text</dd><dt><kbd>Z</kbd></dt><dd>undo the last change</dd>
+    <dt><kbd>P</kbd></dt><dd>switch to the published text</dd><dt><kbd>Shift ↵</kbd></dt><dd>approve and export</dd></dl></div></aside>
 </main>
+<div class="status">
+  <span id="model">Apertus</span>
+  <span>Runs on this machine, no outside connection</span>
+  <span class="grow"></span>
+  <span class="keys"><span><kbd>↓</kbd> <kbd>↑</kbd> next / previous</span><span><kbd>R</kbd> redact</span>
+    <span><kbd>K</kbd> keep</span><span><kbd>Z</kbd> undo</span><span><kbd>P</kbd> published text</span></span>
+</div>
 <dialog id="paste">
-  <h3 style="margin-top:0">Paste a decision (German, French or Italian)</h3>
-  <textarea id="pastetext" placeholder="Paste the full text of the decision, including the header with the parties."></textarea>
-  <div class="row"><button class="btn" onclick="paste.close()">Cancel</button><button class="btn primary" id="pastego">Analyse</button></div>
+  <header><b>Paste a decision</b><p>German, French or Italian. Include the header with the parties; it tells Apertus who is who.</p></header>
+  <textarea id="pastetext" placeholder="Urteil vom …&#10;&#10;Besetzung&#10;…&#10;&#10;Verfahrensbeteiligte&#10;…"></textarea>
+  <footer><span class="grow" id="pastemsg">The text stays on this machine.</span>
+    <button class="btn" id="pastecancel">Cancel</button><button class="btn go" id="pastego">Analyse <kbd>Ctrl ↵</kbd></button></footer>
 </dialog>
 <script>
 const $ = s => document.querySelector(s);
 let docs = [], cur = null, data = null, dec = {}, view = 'review', poll = null;
+let order = [], sel = -1, undo = [], receipt = null;
 const KIND = {PERSON: 'person', ORG: 'organisation', ADDRESS: 'address', DATE_OF_BIRTH: 'birth date', EMAIL: 'e-mail',
               PHONE: 'phone', IBAN: 'IBAN', AHV: 'AHV no.', PLATE: 'plate', LOCATION: 'place'};
-const esc = s => s.replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
+const LANG = {de: 'German', fr: 'French', it: 'Italian'};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 try { $('#reviewer').value = localStorage.getItem('reviewer') || ''; } catch (e) {}
-$('#reviewer').onchange = e => { try { localStorage.setItem('reviewer', e.target.value); } catch (_) {} };
+$('#reviewer').onchange = e => { try { localStorage.setItem('reviewer', e.target.value); } catch (_) {} if (data) draw(); };
 
 async function loadDocs() {
   docs = await (await fetch('/api/docs')).json();
   $('#docs').innerHTML = docs.map(d => `
-    <div class="doc ${cur === d.id ? 'active' : ''}" onclick="openDoc('${d.id}')">
-      <div class="t">${esc(d.title)}</div>
-      <div class="m"><span class="lang">${d.lang.toUpperCase()}</span>${status(d)}</div>
+    <div class="doc ${cur === d.id ? 'active' : ''}" onclick="openDoc('${d.id}')" title="${esc(d.title)}">
+      <span class="t">${esc(d.title)}</span><span class="l">${LANG[d.lang] || d.lang}</span>
+      ${status(d)}
     </div>`).join('');
   if (docs.some(d => d.status === 'analysing' || d.status === 'queued')) { clearTimeout(poll); poll = setTimeout(refresh, 2500); }
 }
 function status(d) {
-  if (d.approved) return '<span class="st-approved">✓ approved</span>';
-  if (d.status === 'analysing') return '<span class="st-analysing"><span class="spinner"></span> Apertus reading…</span>';
-  if (d.status === 'queued') return '<span class="st-analysing">queued</span>';
-  if (d.status === 'error') return '<span class="st-error">error</span>';
-  return '<span class="st-ready">ready for review</span>';
+  if (d.approved) return '<span class="s done">Approved, exported</span>';
+  if (d.status === 'analysing') return '<span class="s">Apertus is reading it</span>';
+  if (d.status === 'queued') return '<span class="s">Waiting to be read</span>';
+  if (d.status === 'error') return '<span class="s err">Could not be read</span>';
+  return '<span class="s">To review</span>';
 }
 async function refresh() { await loadDocs(); if (cur && (!data || data.status !== 'ready')) openDoc(cur, true); }
 
 async function openDoc(id, keep) {
+  if (cur !== id) { sel = -1; undo = []; receipt = null; }
   cur = id;
   data = await (await fetch('/api/doc/' + id)).json();
   if (!keep) view = 'review';
   dec = {};
   if (data.result) for (const e of data.result.entities) dec[e.id] = data.decisions[e.id] || e.decision;
+  $('#ref').textContent = data.title; $('#ref').hidden = false; $('.bar .what').hidden = true;
   loadDocs(); draw();
 }
-function decided(e) { return dec[e.id]; }
+const decided = e => dec[e.id];
+// reasons come from the pipeline; drop the model's vote count (the row already shows how often it occurs)
+const why = r => r.replace(/\s*\(\d+ mentions\)/, '').replace(/_/g, ' ');
+const ent = id => data.result.entities.find(x => x.id === id);
 
 function draw() {
   if (!data) return;
   if (data.status !== 'ready') {
-    $('#doc').innerHTML = `<div class="empty">${data.status === 'error' ? 'Error: ' + esc(data.error || '') :
-      '<span class="spinner"></span> Apertus is reading this decision. Nothing leaves this machine.'}</div>`;
+    $('#doc').innerHTML = data.status === 'error'
+      ? `<div class="blank"><h2>This decision could not be read</h2>${esc(data.error || '')}<br>Check that the Apertus service is running, then paste the text again.</div>`
+      : `<div class="blank"><h2>Apertus is reading this decision</h2>It looks for names, addresses and other identifying details. A decision of a few pages takes about a minute. Nothing leaves this machine.<div class="progress"><i></i></div></div>`;
     $('#side').innerHTML = '';
     return;
   }
   const ents = data.result.entities;
-  const spans = [];
-  for (const e of ents) for (const [s, t] of e.mentions) spans.push([s, t, e]);
-  spans.sort((a, b) => a[0] - b[0]);
-  let html = '', pos = 0;
   const labels = labelMap();
+  const curId = order[sel];
+  let html = '';
   if (view === 'review') {
+    const spans = [];
+    for (const e of ents) for (const [s, t] of e.mentions) spans.push([s, t, e]);
+    spans.sort((a, b) => a[0] - b[0]);
+    let pos = 0;
     for (const [s, t, e] of spans) {
       if (s < pos) continue;
       html += esc(data.text.slice(pos, s));
       const d = decided(e);
       const sup = d === 'redact' && labels[e.id] ? `<sup>${labels[e.id]}</sup>` : '';
-      html += `<mark class="${d}" data-id="${e.id}" title="${esc(KIND[e.kind] || e.kind)} · ${esc(e.reason)} — click to change">${esc(data.text.slice(s, t))}${sup}</mark>`;
+      html += `<mark class="${d}${e.id === curId ? ' cur' : ''}" data-id="${e.id}" title="${esc(KIND[e.kind] || e.kind)}: ${esc(e.reason)}">${esc(data.text.slice(s, t))}${sup}</mark>`;
       pos = t;
     }
     html += esc(data.text.slice(pos));
+    html = paras(html);
   }
   $('#doc').innerHTML = `
-    <div class="toolbar">
-      <div class="seg"><button class="${view === 'review' ? 'on' : ''}" onclick="setView('review')">Review</button>
-      <button class="${view === 'published' ? 'on' : ''}" onclick="setView('published')">Published version</button></div>
-      <div class="legend"><span><i style="background:var(--red-bg);box-shadow:inset 0 -2px 0 var(--red)"></i>redact</span>
-      <span><i style="background:var(--amber-bg);box-shadow:inset 0 -2px 0 var(--amber)"></i>you decide</span>
-      <span><i style="box-shadow:inset 0 -1px 0 var(--blue)"></i>kept (public role)</span></div>
+    <div class="tabs">
+      <button class="${view === 'review' ? 'on' : ''}" onclick="setView('review')">Review</button>
+      <button class="${view === 'published' ? 'on' : ''}" onclick="setView('published')">Published text</button>
+      <div class="key"><span><i class="sw" style="background:var(--red-wash);border-bottom:2px solid var(--red)"></i>redact</span>
+        <span><i class="sw" style="background:var(--mark);border-bottom:2px solid #8c7300"></i>your decision</span>
+        <span><i class="sw" style="border-bottom:1px dotted var(--ink-3)"></i>keep (public role)</span></div>
     </div>
-    <div id="text">${view === 'review' ? html : '…'}</div>`;
+    <div class="sheet"><div id="text">${view === 'review' ? html : ''}</div></div>`;
   if (view === 'published') publish();
-  document.querySelectorAll('#text mark').forEach(m => m.onclick = () => cycle(+m.dataset.id));
+  document.querySelectorAll('#text mark').forEach(m => m.onclick = () => { select(+m.dataset.id); });
   drawSide(ents, labels);
 }
 function labelMap() {
@@ -189,58 +292,98 @@ function labelMap() {
 }
 async function publish() {
   const r = await (await fetch('/api/preview/' + cur, {method: 'POST', body: JSON.stringify({decisions: dec})})).json();
-  $('#text').innerHTML = esc(r.text).replace(/([A-Z]{1,2}\.________|\[…\])/g, '<span class="ph">$1</span>');
+  $('#text').innerHTML = paras(esc(r.text)).replace(/([A-Z]{1,2}\.________|\[…\])/g, '<span class="ph">$1</span>');
 }
+// blank lines between paragraphs become a half-line gap: the decisions are mostly one-line paragraphs
+const paras = h => h.replace(/\n[ \t]*\n(?:[ \t]*\n)*/g, '\n<span class="pb"></span>');
 function setView(v) { view = v; draw(); }
-function cycle(id) {
-  const e = data.result.entities.find(x => x.id === id);
-  dec[id] = decided(e) === 'redact' ? 'keep' : 'redact';
-  draw();
+function setDec(id, v) {
+  if (dec[id] === v) return;
+  undo.push([id, dec[id]]); dec[id] = v; receipt = null; draw();
 }
-function setDec(id, v) { dec[id] = v; draw(); }
-function focusEnt(id) {
+function select(id, scroll) {
+  sel = order.indexOf(id); draw();
+  const row = document.querySelector(`.row[data-id="${id}"]`);
+  if (row) row.scrollIntoView({block: 'nearest'});
   const m = document.querySelector(`#text mark[data-id="${id}"]`);
-  if (m) { m.scrollIntoView({block: 'center', behavior: 'smooth'}); m.classList.add('flash'); setTimeout(() => m.classList.remove('flash'), 900); }
+  if (m && scroll !== false) m.scrollIntoView({block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
 }
 function drawSide(ents, labels) {
   const groups = {review: [], redact: [], keep: []};
   for (const e of ents) groups[decided(e)].push(e);
-  const item = e => `
-    <div class="ent ${decided(e)}" onclick="focusEnt(${e.id})">
-      <div class="n">${labels[e.id] ? `<span class="ph">${labels[e.id]}.</span> ` : ''}${esc(e.name)}<span class="pill">${esc(KIND[e.kind] || e.kind)}</span></div>
-      <div class="r">${esc(e.reason)} · ${e.mentions.length}×</div>
-      <div class="sw" onclick="event.stopPropagation()"><select onchange="setDec(${e.id}, this.value)">
-        <option value="redact" ${decided(e) === 'redact' ? 'selected' : ''}>Redact</option>
-        <option value="keep" ${decided(e) === 'keep' ? 'selected' : ''}>Keep</option>
-        ${decided(e) === 'review' ? '<option value="review" selected>Decide…</option>' : ''}
-      </select></div>
-    </div>`;
+  order = [...groups.review, ...groups.redact, ...groups.keep].map(e => e.id);
+  const curId = order[sel];
+  const row = e => {
+    const d = decided(e);
+    return `<div class="row ${d}${e.id === curId ? ' cur' : ''}" data-id="${e.id}" onclick="select(${e.id})">
+      <span class="lab">${labels[e.id] ? labels[e.id] + '.' : ''}</span>
+      <div><span class="n">${esc(e.name)}</span>
+        <div class="why"><i>${esc(KIND[e.kind] || e.kind)}</i>, ${e.mentions.length}× in text. ${esc(why(e.reason))}</div></div>
+      <span class="pick" onclick="event.stopPropagation()">
+        <button class="r ${d === 'redact' ? 'on' : ''}" onclick="setDec(${e.id}, 'redact')" title="Redact (R)">Redact</button>
+        <button class="k ${d === 'keep' ? 'on' : ''}" onclick="setDec(${e.id}, 'keep')" title="Keep in the text (K)">Keep</button>
+      </span></div>`;
+  };
   const open = groups.review.length;
+  const grp = (title, list, hint, empty) => `<div class="grp">${title}<span>${hint}</span></div>` +
+    (list.length ? list.map(row).join('') : `<div class="none">${empty}</div>`);
+  let foot;
+  if (receipt) {
+    const a = receipt;
+    foot = `<div class="receipt"><h4>Approved and exported</h4><dl>
+      <dt>Reviewer</dt><dd>${esc(a.reviewer)}</dd>
+      <dt>Time</dt><dd>${new Date(a.time).toLocaleString('de-CH', {dateStyle: 'medium', timeStyle: 'short'})}</dd>
+      <dt>Redacted</dt><dd>${a.redacted} items</dd>
+      <dt>Changed by you</dt><dd>${a.changed_by_reviewer.length} of the proposals</dd>
+      <dt>Audit log</dt><dd>outputs/audit.jsonl</dd></dl>
+      <a href="/api/export/${cur}">Download the anonymised text again</a></div>`;
+  } else {
+    foot = `<button class="btn go" ${open ? 'disabled' : ''} onclick="approve()"><span>Approve and export</span><kbd>Shift ↵</kbd></button>
+      <div class="note">${open ? `Decide the ${open} highlighted item${open > 1 ? 's' : ''} first.` :
+        ($('#reviewer').value ? `Signed as ${esc($('#reviewer').value)}. ` : 'Enter your initials at the top so the audit log names you. ') + 'Every change you make is logged.'}</div>`;
+  }
   $('#side').innerHTML = `
-    <div class="stats"><div class="stat r"><b>${groups.redact.length}</b><span>to redact</span></div>
-      <div class="stat a"><b>${open}</b><span>you decide</span></div>
-      <div class="stat k"><b>${groups.keep.length}</b><span>kept</span></div></div>
-    ${open ? '<h3>You decide</h3>' + groups.review.map(item).join('') : ''}
-    <h3>Will be redacted</h3>${groups.redact.map(item).join('') || '<div class="ent"><div class="r">nothing</div></div>'}
-    <h3>Kept: judges, clerks, lawyers, authorities</h3>${groups.keep.map(item).join('') || '<div class="ent"><div class="r">nothing</div></div>'}
-    <div class="approve"><button class="btn primary" ${open ? 'disabled' : ''} onclick="approve()">Approve and export</button>
-      <div class="note" id="note">${open ? open + ' item(s) still need your decision.' : 'Analysed in ' + data.result.seconds + ' s. Your changes are logged.'}</div></div>`;
+    <div class="counts"><div class="open${open ? ' some' : ''}"><b>${open}</b><span>for you to decide</span></div>
+      <div><b>${groups.redact.length}</b><span>to redact</span></div>
+      <div><b>${groups.keep.length}</b><span>to keep</span></div></div>
+    <div class="rows">
+      ${open ? grp('For you to decide', groups.review, 'not clearly linked to a party', '') : ''}
+      ${grp('Redact', groups.redact, 'parties, private persons, identifiers', 'Nothing to redact.')}
+      ${grp('Keep', groups.keep, 'judges, clerks, lawyers, authorities', 'Nothing.')}
+    </div>
+    <div class="sign">${foot}</div>`;
 }
 async function approve() {
+  if (order.some(id => dec[id] === 'review')) return;
   const r = await (await fetch('/api/approve/' + cur, {method: 'POST',
     body: JSON.stringify({decisions: dec, reviewer: $('#reviewer').value})})).json();
-  const changed = r.audit.changed_by_reviewer.length;
+  receipt = r.audit;
   location.href = '/api/export/' + cur;
-  $('#note').textContent = `Approved: ${r.audit.redacted} item(s) redacted, ${changed} changed by you. Logged in outputs/audit.jsonl.`;
-  loadDocs();
+  await loadDocs(); draw();
 }
-$('#pastebtn').onclick = () => paste.showModal();
+
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea, dialog') || e.metaKey || e.altKey) return;
+  if (!data || data.status !== 'ready') return;
+  const k = e.key.toLowerCase();
+  if (e.ctrlKey) return;
+  if (k === 'j' || k === 'n' || e.key === 'ArrowDown') { e.preventDefault(); if (order.length) select(order[Math.min(order.length - 1, sel + 1)]); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (order.length) select(order[Math.max(0, sel - 1)]); }
+  else if ((k === 'r' || k === 'k') && sel >= 0) { const id = order[sel]; setDec(id, k === 'r' ? 'redact' : 'keep'); select(id, false); }
+  else if (k === 'z' && undo.length) { const [id, v] = undo.pop(); dec[id] = v; receipt = null; draw(); }
+  else if (k === 'p') setView(view === 'review' ? 'published' : 'review');
+  else if (e.key === 'Enter' && e.shiftKey) approve();
+});
+
+$('#pastebtn').onclick = () => { $('#pastemsg').textContent = 'The text stays on this machine.'; $('#pastemsg').className = 'grow'; paste.showModal(); };
+$('#pastecancel').onclick = () => paste.close();
+$('#pastetext').onkeydown = e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) $('#pastego').click(); };
 $('#pastego').onclick = async () => {
   const r = await (await fetch('/api/analyse', {method: 'POST', body: JSON.stringify({text: $('#pastetext').value})})).json();
-  if (r.error) return alert(r.error);
+  if (r.error) { $('#pastemsg').textContent = 'Paste the whole decision, at least a few lines, including the parties.'; $('#pastemsg').className = 'grow err'; return; }
   paste.close(); $('#pastetext').value = ''; await loadDocs(); openDoc(r.id);
 };
-fetch('/api/config').then(r => r.json()).then(c => $('#model').textContent = c.model.split('/').pop() + ' · ' + c.endpoint.replace(/^https?:\/\//, ''));
+fetch('/api/config').then(r => r.json()).then(c => $('#model').textContent = c.model.split('/').pop());
 loadDocs();
 </script>
 </body>

@@ -23,6 +23,14 @@ Rechtsanwalt Rechtsanwältin Avocat Avocate Avvocato Me Maître Dr Prof Bundesri
 Gerichtsschreiber Gerichtsschreiberin Greffier Greffière Cancelliere Ehemann Ehefrau Sohn Tochter Vater Mutter Bruder Schwester
 Beschwerdeführer Beschwerdeführerin Beschwerdegegner Beschwerdegegnerin Recourant Recourante Ricorrente Opposant Intimé Intimée
 Und Et Ed Oder Ou O Sowie Ainsi Zeuge Témoin Teste Beistand Curateur Curatrice Arzt Ärztin Médecin""".split())
+# Procedural role words ("Gegenpartei Huber"): they stay in the published text, only the name is replaced.
+ROLE_WORDS = set("""Partei Gegenpartei Kläger Klägerin Beklagter Beklagte Berufungskläger Berufungsklägerin
+Berufungsbeklagter Berufungsbeklagte Gesuchsteller Gesuchstellerin Gesuchsgegner Gesuchsgegnerin Beschuldigter
+Beschuldigte Angeklagter Angeklagte Privatkläger Privatklägerin Verfahrensbeteiligte Mieter Mieterin Vermieter
+Vermieterin Arbeitgeber Arbeitgeberin Arbeitnehmer Arbeitnehmerin Erblasser Erblasserin Firma
+Partie Demandeur Demanderesse Défendeur Défenderesse Appelant Appelante Requérant Requérante Prévenu Prévenue
+Parte Controparte Attore Attrice Convenuto Convenuta Opponente Resistente Imputato Imputata Istante""".split())
+COMMON_CAPS |= ROLE_WORDS
 STOPWORDS = set("""der die das und et le la les il lo gli dei des du von vom zur zum art abs lit ziff al
 let cpv cst bgg bge atf dtf sr rs bundesgericht tribunal tribunale""".split())
 
@@ -112,6 +120,8 @@ def anonymize(text, llm=None, use_rules=True, use_llm=True, use_veto=True):
                 raw_items += 1
                 name, titled = rules.strip_titles(it["name"].strip(" ,;:()«»\"'"))
                 name = name.strip(" .,;:")
+                while name.split(" ", 1)[0] in ROLE_WORDS and " " in name:
+                    name = name.split(" ", 1)[1]  # 'Gegenpartei Huber-Lang' -> 'Huber-Lang'
                 if titled:
                     it["role"] = "official (title before the name)"
                 if len(name) < 2 or name.lower() in STOPWORDS or "_" in name:

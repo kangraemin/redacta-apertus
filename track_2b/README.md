@@ -43,7 +43,7 @@ Measure accuracy yourself: `make eval-all` (rules only, Apertus only, Redacta), 
 2. A name is used only if Apertus copied it exactly from the text. Roles are voted over all mentions.
 3. Rules catch IBAN, AHV number, phone, licence plate, date of birth and street addresses, and keep any name that follows a judge, clerk or lawyer title or sits in the bench list.
 4. Each person gets a letter in order of appearance; surname-only mentions and relatives with the same surname are covered.
-5. The review screen groups everything into *will be redacted*, *you decide* and *kept*, with the reason for each. Export is blocked until every *you decide* item has a decision.
+5. The review screen shows the decision as a page with every proposal marked, and beside it three lists: *for you to decide*, *redact* and *keep*, with the reason for each. Keys: `↓`/`↑` next and previous item, `R` redact, `K` keep, `Z` undo, `P` published text, `Shift+Enter` approve. Export is blocked until every *for you to decide* item has a decision.
 
 ![Architecture](docs/architecture.png)
 
