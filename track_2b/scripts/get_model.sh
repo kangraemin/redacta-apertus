@@ -15,5 +15,7 @@ case "$FILE" in
 esac
 echo "Downloading $REPO/$SRC -> models/$FILE"
 AUTH=""; [ -n "$HF_TOKEN" ] && AUTH="Authorization: Bearer $HF_TOKEN"
-curl -fL ${AUTH:+-H "$AUTH"} -o "models/$FILE" "https://huggingface.co/$REPO/resolve/main/$SRC"
+# download to a .part file first, so an interrupted download is never mistaken for the model
+curl -fL -C - ${AUTH:+-H "$AUTH"} -o "models/$FILE.part" "https://huggingface.co/$REPO/resolve/main/$SRC"
+mv "models/$FILE.part" "models/$FILE"
 echo "done. Now: make run"

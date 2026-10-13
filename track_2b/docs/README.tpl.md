@@ -26,6 +26,10 @@ make model               # build time, needs internet once: downloads models/ape
 make run                 # from here on no network is needed
 ```
 
+If the weights are missing and no endpoint is set, `make run` runs `make model` itself and then starts.
+Clone into your home directory: Colima and Docker Desktop may not share paths outside it (such as `/tmp`) with containers, and the model container then finds no weights.
+Without a GPU (Apertus on CPU inside Docker), the first analysis of the six sample decisions takes about 7 minutes; the page is up before that and fills in as each decision is done.
+
 **2. Existing Apertus endpoint** (e.g. a sovereign Swiss cloud or an in-house server):
 
 ```bash

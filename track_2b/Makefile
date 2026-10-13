@@ -14,8 +14,9 @@ run:
 	else \
 		if [ ! -f models/$(GGUF_FILE) ]; then \
 			echo "No LLM_BASE_URL set and models/$(GGUF_FILE) missing."; \
-			echo "Either export LLM_BASE_URL/LLM_NAME/LLM_API_KEY, or run 'make model' once (needs internet) for air-gapped mode."; \
-			exit 1; \
+			echo "Fetching the Apertus weights now (build step, needs internet once, about 5 GB)."; \
+			echo "To use an existing Apertus endpoint instead, stop here and export LLM_BASE_URL/LLM_NAME/LLM_API_KEY."; \
+			$(MAKE) model || exit 1; \
 		fi; \
 		echo "Air-gapped mode: Apertus runs from models/$(GGUF_FILE) on an internal Docker network"; \
 		LLM_BASE_URL= docker compose --profile airgap up --build; \
