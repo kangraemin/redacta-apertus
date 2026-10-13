@@ -5,7 +5,7 @@ Redacta proposes which words to remove from a Swiss court decision before it is 
 - **Track:** Track 2B — Own Project
 - **Event:** Online
 - **Team:** Redacta — Raemin Kang
-- **Demo:** (link in the submission form)
+- **Demo:** https://youtu.be/eqMI-_Hl9Es (2 min)
 - **Code:** https://github.com/kangraemin/redacta-apertus (`track_2b/`)
 
 ## 1. Summary
