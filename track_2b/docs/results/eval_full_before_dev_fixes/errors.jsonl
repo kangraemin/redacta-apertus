@@ -1,0 +1,53 @@
+{"id": "CH_BGer_001_1C-473-2026_2026-09-09", "missed": [], "false_pos": ["Unbekannt", "Unbekannt", "Unbekannt"]}
+{"id": "CH_BGer_001_1C-545-2026_2026-09-30", "missed": [], "false_pos": ["Verwaltungsrekurskommission", "Verwaltungsrekurskommission", "Verwaltungsrekurskommission"]}
+{"id": "CH_BGer_001_1D-8-2026_2026-09-16", "missed": [], "false_pos": ["Municipio di Chiasso", "Municipio di Chiasso", "piazza Bernasconi 1, 6830 Chiasso"]}
+{"id": "CH_BGer_002_2C-429-2026_2026-09-18", "missed": [], "false_pos": ["Herrn Jan Leitz", "Sicherheitsdirektion", "Sicherheitsdirektion", "Sicherheitsdirektion", "Sicherheitsdirektion", "Bahnhofstrasse 12, 6300 Zug"]}
+{"id": "CH_BGer_002_2C-453-2026_2026-09-08", "missed": [], "false_pos": ["Aubry Girardin", "Aubry Girardin"]}
+{"id": "CH_BGer_002_2C-475-2026_2026-09-18", "missed": [], "false_pos": ["ETH-Beschwerdekommission", "ETH-Beschwerdekommission", "ETH-Beschwerdekommission"]}
+{"id": "CH_BGer_002_2C-482-2026_2026-09-09", "missed": [], "false_pos": ["Chancellerie d'État", "Chancellerie d'État", "Chancellerie d'État"]}
+{"id": "CH_BGer_004_4A-391-2025_2025-11-13", "missed": ["Stefano Bianchi"], "false_pos": []}
+{"id": "CH_BGer_004_4A-397-2026_2026-09-15", "missed": ["Sion"], "false_pos": []}
+{"id": "CH_BGer_004_4A-421-2026_2026-09-17", "missed": ["Urs Moser"], "false_pos": []}
+{"id": "CH_BGer_004_4D-133-2026_2026-09-15", "missed": ["Lausanne"], "false_pos": []}
+{"id": "CH_BGer_004_4D-150-2026_2026-09-07", "missed": ["Montreux"], "false_pos": ["Hurni", "Hurni"]}
+{"id": "CH_BGer_004_4D-152-2026_2026-09-28", "missed": ["Garten-strasse"], "false_pos": []}
+{"id": "CH_BGer_004_4D-93-2026_2026-07-16", "missed": ["Sara Grassi", "Grassi", "Grassi", "Valentina Zanetti"], "false_pos": []}
+{"id": "CH_BGer_004_4D-94-2026_2026-09-03", "missed": ["Daniel Vuilleumier"], "false_pos": ["État de Vaud", "État de Vaud"]}
+{"id": "CH_BGer_004_4F-20-2026_2026-09-14", "missed": [], "false_pos": ["État de Vaud"]}
+{"id": "CH_BGer_004_4F-24-2026_2026-09-24", "missed": [], "false_pos": ["Kiss", "Kiss", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchsgegner", "Gesuchsgegner"]}
+{"id": "CH_BGer_005_5A-571-2026_2026-08-18", "missed": ["Alessandro Colombo"], "false_pos": []}
+{"id": "CH_BGer_005_5A-591-2026_2026-09-15", "missed": [], "false_pos": ["Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance"]}
+{"id": "CH_BGer_005_5A-671-2026_2026-09-18", "missed": [], "false_pos": ["Chambre des recours civile", "Chambre des recours civile", "Chambre des recours civile", "Chambre des recours civile"]}
+{"id": "CH_BGer_005_5A-694-2026_2026-09-15", "missed": ["Élodie Gay", "Élodie Savary"], "false_pos": []}
+{"id": "CH_BGer_005_5A-708-2026_2026-09-11", "missed": ["Luca Bernasconi", "Luca Bernasconi"], "false_pos": []}
+{"id": "CH_BGer_005_5A-718-2026_2026-09-15", "missed": ["Silvia Fontana"], "false_pos": []}
+{"id": "CH_BGer_005_5A-780-2026_2026-09-08", "missed": ["Nathalie Savary"], "false_pos": []}
+{"id": "CH_BGer_005_5A-792-2026_2026-08-28", "missed": ["Giovanni Bottani", "Silvia Maggi", "Bottani"], "false_pos": ["Confederazione svizzera"]}
+{"id": "CH_BGer_005_5A-860-2026_2026-09-28", "missed": ["Jean-Marc Clément"], "false_pos": []}
+{"id": "CH_BGer_005_5A-867-2026_2026-09-15", "missed": ["Sylvie Pittet", "Pascal Ducret"], "false_pos": ["Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance"]}
+{"id": "CH_BGer_005_5A-890-2026_2026-09-23", "missed": ["Karin Hofmann"], "false_pos": []}
+{"id": "CH_BGer_005_5A-891-2026_2026-09-24", "missed": [], "false_pos": ["Lausanne"]}
+{"id": "CH_BGer_005_5A-906-2026_2026-09-24", "missed": ["Sonnenstrasse"], "false_pos": []}
+{"id": "CH_BGer_005_5A-939-2026_2026-09-24", "missed": ["Ahornstrasse"], "false_pos": []}
+{"id": "CH_BGer_005_5A-948-2026_2026-09-24", "missed": [], "false_pos": ["II. zivilrechtliche Abteilung"]}
+{"id": "CH_BGer_005_5A-971-2025_2025-11-19", "missed": ["Maggi Informatica", "Manuela Cattaneo"], "false_pos": []}
+{"id": "CH_BGer_005_5D-37-2026_2026-09-28", "missed": ["Gartenweg"], "false_pos": ["Gartenbaufirma", "Gartenbaufirma", "Gartenbaufirma", "Gartenbaufirma"]}
+{"id": "CH_BGer_006_6B-408-2026_2026-09-02", "missed": ["Camille Chevalley"], "false_pos": []}
+{"id": "CH_BGer_006_6F-13-2026_2026-09-08", "missed": [], "false_pos": ["Greffier", "Greffier"]}
+{"id": "CH_BGer_007_7B-1042-2026_2026-09-15", "missed": ["Yvonne Bühler"], "false_pos": []}
+{"id": "CH_BGer_007_7B-804-2026_2026-07-23", "missed": ["Quadri Immobiliare"], "false_pos": []}
+{"id": "CH_BGer_007_7B-892-2026_2026-09-15", "missed": ["Lüthi Garage"], "false_pos": []}
+{"id": "CH_BGer_007_7F-62-2026_2026-09-17", "missed": ["Daniela Baumann"], "false_pos": []}
+{"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["Camille Tissot", "Luc Mercier", "Mercier", "Daniel Berset"], "false_pos": []}
+{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": [], "false_pos": ["21 mai 1965", "Unisanté", "Unisanté", "Unisanté", "Unisanté"]}
+{"id": "CH_BGer_008_8C-341-2026_2026-09-01", "missed": [], "false_pos": ["Centre social régional de la Broye-Vully", "Centre social régional de la Broye-Vully", "rue des Terreaux 1, 1530 Payerne"]}
+{"id": "CH_BGer_008_8C-342-2026_2026-08-13", "missed": ["Manuela Vassalli"], "false_pos": []}
+{"id": "CH_BGer_008_8C-578-2026_2026-09-16", "missed": ["Beat Zimmermann", "Hans Ammann"], "false_pos": []}
+{"id": "CH_BGer_008_8C-95-2026_2026-09-14", "missed": [], "false_pos": ["Abteilung Militärversicherung", "JÜRG MAESCHI", "STEPHAN A. DETTWILER"]}
+{"id": "CH_BGer_009_9C-217-2026_2026-09-08", "missed": ["Manuela Steiner", "Manuela Steiner", "Manuela Steiner", "Manuela Steiner", "Steiner", "Steiner", "Manuela Steiner", "Manuela Steiner"], "false_pos": []}
+{"id": "CH_BGer_009_9C-465-2026_2026-09-15", "missed": ["Chur"], "false_pos": []}
+{"id": "CH_BGer_009_9C-466-2026_2026-09-15", "missed": ["Aarau"], "false_pos": []}
+{"id": "CH_BGer_009_9C-467-2026_2026-09-15", "missed": ["Chur"], "false_pos": []}
+{"id": "CH_BGer_009_9C-470-2026_2026-09-10", "missed": [], "false_pos": ["Rechtsdienst", "Bändliweg 21, 8090 Zürich"]}
+{"id": "CH_BGer_009_9C-491-2026_2026-09-22", "missed": [], "false_pos": ["ASSURA-Basis SA", "ASSURA-Basis SA"]}
+{"id": "CH_BGer_009_9C-636-2025_2025-12-04", "missed": ["Manuela Sala", "Sala"], "false_pos": []}

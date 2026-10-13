@@ -1,11 +1,9 @@
 {"id": "CH_BGer_001_1C-204-2026_2026-06-15", "missed": ["Manuela Bianchi"], "false_pos": []}
 {"id": "CH_BGer_004_4A-285-2026_2026-06-19", "missed": [], "false_pos": ["Arbitro unico per i lavori in gesso e l'intonacatura", "Arbitro unico per i lavori in gesso e l'intonacatura", "Arbitro unico per i lavori in gesso e l'intonacatura"]}
-{"id": "CH_BGer_004_4A-401-2026_2026-09-15", "missed": ["Bahnhof-Strasse", "Lukas Egli", "Aarau"], "false_pos": ["Vermieterin", "Vermieterin", "Vermieterin"]}
+{"id": "CH_BGer_004_4A-401-2026_2026-09-15", "missed": ["Bahnhof-Strasse", "Lukas Egli", "Aarau"], "false_pos": []}
 {"id": "CH_BGer_004_4D-134-2026_2026-09-15", "missed": ["Genève"], "false_pos": []}
 {"id": "CH_BGer_005_5A-652-2026_2026-09-15", "missed": ["Luc Roulin", "Pascal Aubert"], "false_pos": []}
-{"id": "CH_BGer_005_5A-760-2026_2026-09-15", "missed": ["Bernard Morand", "Camille Mercier"], "false_pos": ["Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance", "Chambre de surveillance"]}
+{"id": "CH_BGer_005_5A-760-2026_2026-09-15", "missed": ["Bernard Morand", "Camille Mercier"], "false_pos": []}
 {"id": "CH_BGer_007_7B-483-2026_2026-09-07", "missed": ["Lukas Ammann", "Ammann", "Ammann", "Lukas Ammann", "Lukas Ammann", "Verena Wyss"], "false_pos": []}
-{"id": "CH_BGer_008_8C-262-2026_2026-07-08", "missed": ["Francesca Grassi", "Fabio Lepori", "Grassi", "Lepori", "Francesca Grassi"], "false_pos": []}
-{"id": "CH_BGer_008_8C-410-2026_2026-09-10", "missed": ["Laurence Perrin", "Perrin", "Julien Berset"], "false_pos": []}
 {"id": "CH_BGer_008_8C-91-2026_2026-09-01", "missed": [], "false_pos": ["Centre d'expertises BEM Riviera Sàrl", "BEM Riviera Sàrl"]}
 {"id": "CH_BGer_009_9C-578-2026_2026-09-22", "missed": ["Marco Wälti"], "false_pos": []}

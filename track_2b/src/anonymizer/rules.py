@@ -65,6 +65,32 @@ def strip_titles(name: str):
         name = name[m.end():]
 
 
+# Medical titles. A doctor is usually a private person (treating doctor, private expert) whose name the
+# court removes, but some are officials (insurer's or court's medical adviser): never kept silently.
+MEDICAL_TITLE = re.compile(
+    r"^(?:Dr\.?\s*(?:med\.|méd\.)(?:\s*(?:dent|vet)\.)?|med\.(?:\s*(?:dent|vet)\.)?|[Dd]octeur|[Dd]octoresse|"
+    r"[Dd]ott(?:ore|oressa|\.(?:ssa)?)|[Dd]r\.?\s+med\b\.?|Arzt|Ärztin|[Mm]édecin|[Mm]edico|[Pp]sychiat\w*)\s+")
+_MEDICAL_BEFORE = re.compile(
+    r"(?:Dr\.?\s*(?:med\.|méd\.)(?:\s*(?:dent|vet)\.)?|\b[Dd]octeur|\b[Dd]octoresse|\b[Dd]ott(?:ore|oressa|\.(?:ssa)?)"
+    r"|\b[Mm]édecin|\b[Mm]edico|\bArzt|\bÄrztin)\s*(?:(?:Dr\.|Prof\.|PD)\s*)*$")
+
+
+def strip_medical(name: str):
+    """'Dr. med. Manuela Steiner' -> ('Manuela Steiner', True). Second value: a medical title was removed."""
+    medical = False
+    while True:
+        m = MEDICAL_TITLE.match(name)
+        if not m:
+            return name, medical
+        medical = True
+        name = name[m.end():]
+
+
+def after_medical_title(text: str, start: int) -> bool:
+    window = re.split(r"[;\n]", text[max(0, start - 40):start])[-1]
+    return bool(_MEDICAL_BEFORE.search(window.rstrip()))
+
+
 def find(text: str):
     hits = []
     for kind, rx in PATTERNS:
@@ -103,7 +129,8 @@ PUBLIC_BODY = re.compile(
     r"eidgenöss\w*|eidgenoss\w*|gemeinde\w*|commune|comune|municipalit\w*|stadt|ville|città|republi\w*|"
     r"gericht\w*|tribunal\w*|tribunale|cour|corte|justice|juge|giudic\w*|pretur\w*|"
     r"amt|ämter|\w+amt|office|ufficio|service|servizio|sezione|division\w*|direction|direzione|"
-    r"departement|département|dipartimento|direktion|verwaltung|administration|amministrazione|"
+    r"departement|département|dipartimento|\w*direktion|\w*departement|verwaltung|administration|amministrazione|"
+    r"kammer|\w+kammer|chambre|camera|\w*sekretariat|secrétariat|segretariato|\w*inspektorat|inspection|"
     r"regierungs\w*|conseil d'état|consiglio di stato|staatsanwaltschaft|\w*staatsanwaltschaft|"
     r"ministère public|ministero pubblico|polizei|police|polizia|kommission|commission|commissione|"
     r"\w*behörde|autorité|autorità|kesb|apea|iv-stelle|office ai|ufficio ai|ausgleichskasse|"

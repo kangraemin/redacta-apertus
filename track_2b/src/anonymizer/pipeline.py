@@ -118,20 +118,24 @@ def anonymize(text, llm=None, use_rules=True, use_llm=True, use_veto=True):
         for off, chunk in chunks_of(text):
             for it in llm.find_names(header[:1500], chunk):
                 raw_items += 1
-                name, titled = rules.strip_titles(it["name"].strip(" ,;:()«»\"'"))
+                raw, medical = rules.strip_medical(it["name"].strip(" ,;:()«»\"'"))
+                name, titled = rules.strip_titles(raw)
+                name, med2 = rules.strip_medical(name)  # 'Dr. med. X': 'Dr.' went with the titles
+                medical = medical or med2
                 name = name.strip(" .,;:")
                 while name.split(" ", 1)[0] in ROLE_WORDS and " " in name:
                     name = name.split(" ", 1)[1]  # 'Gegenpartei Huber-Lang' -> 'Huber-Lang'
                 if titled:
                     it["role"] = "official (title before the name)"
-                if len(name) < 2 or name.lower() in STOPWORDS or "_" in name:
+                if len(name) < 2 or name.lower() in STOPWORDS or "_" in name or name in COMMON_CAPS:
                     continue
                 if name not in chunk:
                     continue  # the model must copy text it saw; anything else is dropped
                 if not looks_like_name(name):
                     continue
-                v = votes.setdefault(name, {"kind": it["kind"], "roles": []})
+                v = votes.setdefault(name, {"kind": it["kind"], "roles": [], "medical": False})
                 v["roles"].append(it["role"])
+                v["medical"] = v["medical"] or medical
 
     entities = []
     for name, v in votes.items():
@@ -146,7 +150,7 @@ def anonymize(text, llm=None, use_rules=True, use_llm=True, use_veto=True):
             kind, redact = "ORG", False
             reason += "; rule: court, authority or insurer"
         entities.append({"name": name, "kind": kind, "role": role, "source": "apertus",
-                         "decision": "redact" if redact else "keep", "reason": reason})
+                         "decision": "redact" if redact else "keep", "reason": reason, "medical": v["medical"]})
 
     # 2) group surname-only mentions with the full name and collect every occurrence in the whole text
     persons = [e for e in entities if e["kind"] == "PERSON"]
@@ -160,6 +164,7 @@ def anonymize(text, llm=None, use_rules=True, use_llm=True, use_veto=True):
                 break
         if target:
             target["forms"].add(e["name"])
+            target["medical"] = target["medical"] or e["medical"]
             if e["decision"] == "redact":
                 target["decision"] = "redact"
         else:
@@ -200,6 +205,11 @@ def anonymize(text, llm=None, use_rules=True, use_llm=True, use_veto=True):
         if e["decision"] == "redact" and sum(vetoed(s) for s, _ in spans) * 2 > len(spans):
             e["decision"] = "keep"
             e["reason"] += "; rule: appears with a judge/clerk/lawyer title"
+        if use_veto and e["kind"] == "PERSON" and e["decision"] == "keep" and \
+                (e.pop("medical", False) or any(rules.after_medical_title(text, s) for s, _ in spans)):
+            e["decision"] = "review"  # private doctors are usually removed, the insurer's adviser may stay
+            e["reason"] += "; rule: doctor, check whether private"
+        e.pop("medical", None)
         if e["kind"] == "PERSON" and e["decision"] == "redact":
             spans = [_with_first_name(text, s, t, taken) for s, t in spans]
         e["mentions"] = sorted(spans)

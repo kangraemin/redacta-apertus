@@ -45,7 +45,7 @@
 {"id": "CH_BGer_004_4F-16-2026_2026-08-04", "missed": [], "false_pos": ["Cassa cantonale di compensazione AVS/AI/IPG", "Cassa cantonale di compensazione AVS/AI/IPG"]}
 {"id": "CH_BGer_004_4F-20-2026_2026-09-14", "missed": [], "false_pos": ["État de Vaud"]}
 {"id": "CH_BGer_004_4F-23-2026_2026-09-09", "missed": [], "false_pos": ["Département de la santé et de l'action sociale du canton de Vaud"]}
-{"id": "CH_BGer_004_4F-24-2026_2026-09-24", "missed": [], "false_pos": ["Kiss", "Kiss", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Gesuchstellerin", "Obergericht des Kantons Aargau", "Gesuchsgegner", "Gesuchsgegner", "Handelsregisteramt des Kantons Aargau", "Konkursamt Aargau", "Grundbuchamt Baden"]}
+{"id": "CH_BGer_004_4F-24-2026_2026-09-24", "missed": [], "false_pos": ["Kiss", "Kiss", "Obergericht des Kantons Aargau", "Handelsregisteramt des Kantons Aargau", "Konkursamt Aargau", "Grundbuchamt Baden"]}
 {"id": "CH_BGer_004_4F-27-2026_2026-09-17", "missed": ["né le 22 février 1997", "né le 25 août 1950"], "false_pos": []}
 {"id": "CH_BGer_004_4G-1-2026_2026-09-10", "missed": ["rue des Alpes 83, 1950 Sion"], "false_pos": ["Pierre Ventura", "Yvan Gisling", "Charlène Thorin"]}
 {"id": "CH_BGer_005_5A-571-2026_2026-08-18", "missed": ["via Lugano 91, 6830 Chiasso", "via Lugano 11, 6830 Chiasso", "via della Posta 30, 6612 Ascona", "Alessandro Colombo"], "false_pos": []}
@@ -90,7 +90,7 @@
 {"id": "CH_BGer_006_6B-521-2026_2026-09-18", "missed": ["geboren am 12. Juni 1994"], "false_pos": ["Staatsanwaltschaft des Kantons Appenzell I.Rh"]}
 {"id": "CH_BGer_006_6B-768-2025_2026-08-18", "missed": ["via Lugano 67, 6500 Bellinzona", "nato il 18 ottobre 1958"], "false_pos": ["Ministero pubblico del Cantone Ticino", "Corte di appello e di revisione penale del Cantone Ticino", "Corte di appello e di revisione penale del Cantone Ticino", "Corte di appello e di revisione penale del Cantone Ticino"]}
 {"id": "CH_BGer_006_6B-956-2024_2025-10-22", "missed": ["via Lugano 1, 6850 Mendrisio"], "false_pos": ["Ministero pubblico del Cantone Ticino", "Ministero pubblico del Cantone Ticino", "Giuseppe Gianella"]}
-{"id": "CH_BGer_006_6F-13-2026_2026-09-08", "missed": [], "false_pos": ["Juge présidant", "Juge présidant", "Juge présidant", "Greffier", "Greffier", "Ministère public de la République et canton du Jura", "Juge fédéral", "Juge fédéral"]}
+{"id": "CH_BGer_006_6F-13-2026_2026-09-08", "missed": [], "false_pos": ["Juge présidant", "Juge présidant", "Juge présidant", "Ministère public de la République et canton du Jura", "Juge fédéral", "Juge fédéral"]}
 {"id": "CH_BGer_006_6F-36-2025_2025-11-20", "missed": [], "false_pos": ["Ministero pubblico del Cantone Ticino"]}
 {"id": "CH_BGer_007_7B-1042-2026_2026-09-15", "missed": [], "false_pos": ["Staatsanwaltschaft des Kantons Solothurn"]}
 {"id": "CH_BGer_007_7B-1082-2026_2026-09-02", "missed": ["né le 24 juin 1955"], "false_pos": ["Ministère public de la République et canton de Genève", "Ministère public de la République et canton de Genève"]}
@@ -110,7 +110,7 @@
 {"id": "CH_BGer_007_7B-933-2026_2026-07-29", "missed": ["via dei Pini 89, 6850 Mendrisio"], "false_pos": ["Ministero pubblico del Cantone Ticino"]}
 {"id": "CH_BGer_007_7F-50-2026_2026-09-08", "missed": ["via San Gottardo 70, 6900 Lugano"], "false_pos": ["Ministero pubblico del Cantone Ticino"]}
 {"id": "CH_BGer_007_7F-62-2026_2026-09-17", "missed": ["Mühlestrasse 48, 5000 Aarau"], "false_pos": ["Generalstaatsanwaltschaft des Kantons Bern"]}
-{"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["né le 1 janvier 1984", "Camille Tissot", "Luc Mercier", "Mercier", "Daniel Berset"], "false_pos": ["Chambre des assurances sociales de la Cour de justice de la République et canton de Genève", "Chambre des assurances sociales de la Cour de justice de la République et canton de Genève", "Office fédéral de la santé publique", "Office fédéral de la santé publique"]}
+{"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["né le 1 janvier 1984", "Camille Tissot"], "false_pos": ["Chambre des assurances sociales de la Cour de justice de la République et canton de Genève", "Chambre des assurances sociales de la Cour de justice de la République et canton de Genève", "Office fédéral de la santé publique", "Office fédéral de la santé publique"]}
 {"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": [], "false_pos": ["Office de l'assurance-invalidité pour le canton de Vaud", "Office de l'assurance-invalidité pour le canton de Vaud", "Unisanté", "Unisanté", "Unisanté", "Unisanté"]}
 {"id": "CH_BGer_008_8C-269-2026_2026-08-03", "missed": ["via Castello 35, 6710 Biasca"], "false_pos": ["Cassa cantonale di compensazione AVS/AI/IPG", "Cassa cantonale di compensazione AVS/AI/IPG", "Tribunale delle assicurazioni del Cantone Ticino", "Tribunale delle assicurazioni del Cantone Ticino", "Tribunale delle assicurazioni del Cantone Ticino", "Ufficio federale delle assicurazioni sociali"]}
 {"id": "CH_BGer_008_8C-341-2026_2026-09-01", "missed": ["rue des Alpes 52, 2800 Delémont"], "false_pos": ["Centre social régional de la Broye-Vully", "Centre social régional de la Broye-Vully"]}
@@ -120,12 +120,12 @@
 {"id": "CH_BGer_008_8C-448-2026_2026-09-07", "missed": ["rue du Moulin 3, 2800 Delémont"], "false_pos": []}
 {"id": "CH_BGer_008_8C-456-2026_2026-09-08", "missed": ["geboren am 17. Januar 1997"], "false_pos": ["Ausgleichskasse Zug", "Ausgleichskasse Zug"]}
 {"id": "CH_BGer_008_8C-504-2026_2026-08-25", "missed": ["via Lugano 77, 6600 Locarno"], "false_pos": ["Baloise Assicurazione SA", "Baloise Assicurazione SA"]}
-{"id": "CH_BGer_008_8C-578-2026_2026-09-16", "missed": ["Lindenstrasse 2, 3012 Bern", "Beat Zimmermann", "Bahnhofstrasse 17, 7000 Chur", "Hans Ammann"], "false_pos": ["IV-Stelle des Kantons St. Gallen", "Versicherungsgericht des Kantons St. Gallen", "Bundesamt für Sozialversicherungen"]}
+{"id": "CH_BGer_008_8C-578-2026_2026-09-16", "missed": ["Lindenstrasse 2, 3012 Bern", "Beat Zimmermann", "Bahnhofstrasse 17, 7000 Chur"], "false_pos": ["IV-Stelle des Kantons St. Gallen", "Versicherungsgericht des Kantons St. Gallen", "Bundesamt für Sozialversicherungen"]}
 {"id": "CH_BGer_008_8C-603-2025_2025-11-03", "missed": ["via San Gottardo 119, 6900 Lugano"], "false_pos": ["Cassa disoccupazione Cristiano Sociale OCST"]}
 {"id": "CH_BGer_008_8C-95-2026_2026-09-14", "missed": ["geboren am 9. Januar 1990"], "false_pos": ["Suva, Abteilung Militärversicherung, Service Center", "Suva", "Suva", "Suva", "Suva", "Suva", "Suva", "Suva", "Suva", "Suva", "Suva", "Abteilung Militärversicherung", "Bundesamt für Gesundheit", "Bundesamt für Gesundheit", "JÜRG MAESCHI", "STEPHAN A. DETTWILER", "Suva, Abteilung Militärversicherung"]}
 {"id": "CH_BGer_008_8F-7-2026_2026-09-10", "missed": ["rue de la Gare 19, 1205 Genève"], "false_pos": []}
 {"id": "CH_BGer_009_9C-172-2026_2026-08-28", "missed": ["via Lugano 100, 6612 Ascona"], "false_pos": ["Divisione delle contribuzioni della Repubblica e Cantone Ticino", "Amministrazione imposte del Cantone dei Grigioni", "Amministrazione imposte del Cantone dei Grigioni", "Amministrazione federale delle contribuzioni, Divisione principale imposta federale diretta, imposta preventiva, tasse di bollo", "Amministrazione federale delle contribuzioni", "Amministrazione federale delle contribuzioni", "Divisione delle contribuzioni del Cantone Ticino", "Divisione delle contribuzioni del Cantone Ticino", "Divisione delle contribuzioni del Cantone Ticino", "Divisione delle contribuzioni del Cantone Ticino"]}
-{"id": "CH_BGer_009_9C-217-2026_2026-09-08", "missed": ["geboren am 1. März 1983", "Manuela Steiner", "Manuela Steiner", "Manuela Steiner", "Manuela Steiner", "Steiner", "Steiner", "Manuela Steiner", "Manuela Steiner"], "false_pos": []}
+{"id": "CH_BGer_009_9C-217-2026_2026-09-08", "missed": ["geboren am 1. März 1983"], "false_pos": []}
 {"id": "CH_BGer_009_9C-395-2026_2026-09-11", "missed": ["Ahornstrasse 19, 9000 St. Gallen"], "false_pos": ["IV-Stelle des Kantons St. Gallen", "IV-Stelle des Kantons St. Gallen"]}
 {"id": "CH_BGer_009_9C-465-2026_2026-09-15", "missed": ["Chur"], "false_pos": ["Steuerverwaltung des Kantons Basel-Landschaft", "Steuerverwaltung des Kantons Basel-Landschaft"]}
 {"id": "CH_BGer_009_9C-466-2026_2026-09-15", "missed": ["Bergstrasse 40, 8004 Zürich", "Aarau"], "false_pos": ["Steuerverwaltung des Kantons Basel-Landschaft", "Steuerverwaltung des Kantons Basel-Landschaft"]}
@@ -134,7 +134,7 @@
 {"id": "CH_BGer_009_9C-491-2026_2026-09-22", "missed": ["rue des Pâquis 48, 1205 Genève"], "false_pos": ["ASSURA-Basis SA", "ASSURA-Basis SA"]}
 {"id": "CH_BGer_009_9C-530-2025_2025-12-01", "missed": ["via Vela 3, 6500 Bellinzona"], "false_pos": ["Tribunale delle assicurazioni del Cantone Ticino", "Tribunale delle assicurazioni del Cantone Ticino", "Tribunale delle assicurazioni del Cantone Ticino", "Ufficio federale delle assicurazioni sociali"]}
 {"id": "CH_BGer_009_9C-543-2026_2026-09-15", "missed": ["via dei Pini 99, 6600 Locarno"], "false_pos": ["Ufficio federale delle comunicazioni UFCOM"]}
-{"id": "CH_BGer_009_9C-636-2025_2025-12-04", "missed": ["nato il 13 febbraio 1990", "Manuela Sala", "Sala"], "false_pos": ["Atupri Assicurazione della salute SA", "Atupri Assicurazione della salute SA", "Ufficio di esecuzione di Lugano"]}
+{"id": "CH_BGer_009_9C-636-2025_2025-12-04", "missed": ["nato il 13 febbraio 1990"], "false_pos": ["Atupri Assicurazione della salute SA", "Atupri Assicurazione della salute SA", "Ufficio di esecuzione di Lugano"]}
 {"id": "CH_BGer_009_9C-92-2026_2026-08-28", "missed": ["rue des Vergers 46, 1004 Lausanne"], "false_pos": ["Helsana Assurances SA", "Helsana Assurances SA"]}
 {"id": "CH_BGer_009_9F-19-2026_2026-09-10", "missed": ["geboren am 10. Oktober 1982"], "false_pos": ["Sozialversicherungsanstalt des Kantons Zürich"]}
 {"id": "CH_BGer_015_12T-1-2026_2026-08-21", "missed": ["via della Posta 62, 6780 Airolo", "via dei Fiori 60, 6850 Mendrisio"], "false_pos": []}
