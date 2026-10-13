@@ -14,7 +14,7 @@ Swiss courts must make their decisions public. Before a decision goes out, someo
 
 Redacta puts Apertus v1.5 8B and a set of fixed rules side by side. Apertus lists every name in each part of the decision and gives it a role (party, private person, judge, lawyer, authority, ...). The rules catch identifiers that have a fixed shape (IBAN, AHV number, phone, licence plate, date of birth, street address) and stop names that follow a judge, clerk or lawyer title from being removed. The clerk sees the decision with every proposal marked, the reason for each one, and a short list of items the system is unsure about. Nothing is exported until those are decided, and every approval is logged.
 
-To measure accuracy without hand labelling, we took {{N_ALL}} published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the {{N_TEST}} test decisions, Redacta by default removes **{{R_FULL}}** of the {{G_TEST}} strings that must go (rules alone: {{R_RULES}}; Apertus alone: {{R_AP}}; on the {{N_DEV_DOCS}} dev decisions: {{R_DEV}}). It wrongly removes **{{PROT_FULL}}** of the {{PROT_N}} occurrences of judges', clerks' and lawyers' names. It takes {{SEC}} s per decision on a laptop.
+To measure accuracy without hand labelling, we took {{N_ALL}} published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the {{N_TEST}} test decisions, Redacta by default removes **{{R_FULL}}** of the {{G_TEST}} strings that must go (rules alone: {{R_RULES}}; Apertus alone: {{R_AP}}; on the {{N_DEV_DOCS}} dev decisions: {{R_DEV}}). It wrongly removes **{{PROT_FULL}}** of the {{PROT_N}} occurrences of judges', clerks' and lawyers' names. An off-the-shelf multilingual NER model, which we ran only as a baseline, finds {{R_NER}} of the strings but also removes {{PROT_NER}} of those judges', clerks' and lawyers' names, because it sees entity types, not roles. Redacta takes {{SEC}} s per decision on a laptop GPU and needs no external service.
 
 ## 2. Architecture
 
@@ -51,7 +51,7 @@ Pipeline for one decision (`src/anonymizer/pipeline.py`):
 
 The v1.5 8B checkpoint is multimodal. We kept only the text branch: a text-only config, the first 131,072 rows of the embedding table, and `<|assistant_end|>` (id 68) marked as end-of-generation; without that the model does not stop. `scripts/convert_gguf.sh` reproduces this from the official safetensors. The prompt (`src/anonymizer/llm.py`) states Swiss practice in two sentences (who is replaced, who stays) and asks only for a list of names with roles. The model never rewrites the text. That keeps every change visible and lets the code check each claim against the source.
 
-Why Apertus and not a smaller NER model: the decisive information is the *role*, not the entity type. "Me Christophe Pittet" (lawyer, stays) and "Christophe Pittet, recourant" (party, goes) are the same entity type. Apertus reads the procedural context in all three languages with one model. Fixed-shape identifiers and the title veto are left to rules, because rules are exact there. No other model is used anywhere in the system or in the evaluation.
+Why Apertus and not a smaller NER model: the decisive information is the *role*, not the entity type. "Me Christophe Pittet" (lawyer, stays) and "Christophe Pittet, recourant" (party, goes) are the same entity type. Apertus reads the procedural context in all three languages with one model. Fixed-shape identifiers and the title veto are left to rules, because rules are exact there. No other model is used in the system. For the evaluation only, we ran one off-the-shelf NER model (spaCy `xx_ent_wiki_sm`) as a baseline to test exactly this point (Section 5). It is not part of Redacta and is not in the Docker image.
 
 ## 4. Data
 
@@ -69,7 +69,13 @@ Task: given the refilled decision, which characters must be removed. A gold stri
 |---|---|---|---|---|---|
 | Rules only (regex) | {{R_RULES}} | {{P_RULES}} | {{LF_RULES}} | {{PROT_RULES}} | {{IC_RULES}} |
 | Apertus only (no rules, no veto) | {{R_AP}} | {{P_AP}} | {{LF_AP}} | {{PROT_AP}} | {{IC_AP}} |
+| Off-the-shelf NER, baseline only (spaCy `xx_ent_wiki_sm`, every PER/ORG) | {{R_NER}} | {{P_NER}} | {{LF_NER}} | {{PROT_NER}} | {{IC_NER}} |
+| Same NER + Redacta's rules and veto (Apertus replaced by NER) | {{R_NERR}} | {{P_NERR}} | {{LF_NERR}} | {{PROT_NERR}} | {{IC_NERR}} |
 | **Redacta (Apertus + rules + veto)** | **{{R_FULL}}** | **{{P_FULL}}** | **{{LF_FULL}}** | **{{PROT_FULL}}** | {{IC_FULL}} |
+
+The NER rows answer the question whether a small entity tagger would do. With the same rules and veto around it, the tagger finds {{R_NERR}} instead of {{R_FULL}} and still removes {{PROT_NERR}} of the protected names, mostly in the signature lines ("Le Président : Hurni"), which our title rule does not cover. There Apertus reads the role from the context; the tagger only knows that a person is named. The baseline is `scripts/baseline_ner.py`, run outside Docker with its own requirements (`scripts/requirements-eval.txt`).
+
+**Related work.** The Federal Supreme Court's own study (Niklaus et al., 2023) fine-tuned BERT-type models on 119,156 rulings annotated with the entities the court anonymised. Recall rose from 83.8% (multilingual BERT) to 92.6% (a model pre-trained on Swiss legal text), with 92.3% precision. Their test data and their metric (entity-level scores on the court's own annotations) differ from ours, so the numbers are not directly comparable. The difference in setup is the point: they needed a large labelled corpus and a model trained for the task; Redacta uses no labelled training data and an open general model, prompted with two sentences of Swiss practice.
 
 By language and type (Redacta):
 
@@ -77,23 +83,37 @@ By language and type (Redacta):
 
 {{ERROR_NOTES}}
 
-## 6. Limitations
+## 6. Value and cost
+
+Measured on the laptop used for this report (Apple M1 Max, 32 GB), without cached answers:
+
+| Where Apertus runs | Decisions | Seconds per decision |
+|---|---|---|
+| llama.cpp with Metal (laptop GPU), all test decisions, first full run | {{N_TEST}} | {{SEC_FULLRUN}} |
+| llama.cpp with Metal, first 10 test decisions, today's code | 10 | {{SEC10_METAL}} |
+| `make run` container, CPU only ({{CPU_VM}}) | 10 | {{SEC10_CPU}} |
+
+The first 10 test decisions average {{CHARS10}} characters, longer than the test average of {{CHARS_TEST}}. At {{SEC_FULLRUN}} s per decision, one such machine processes about {{DAY_METAL}} decisions a day with one model slot. On the same ten decisions the CPU-only container is {{CPU_X}} times slower than Metal, about {{DAY_CPU}} decisions of that length a day. In 2025 the Federal Supreme Court delivered 7,883 judgments ([joint press release of the federal courts, 17 March 2026](https://www.bvger.ch/bvger/documents/geschaeftsberichte/2025/gemeinsame_mm_gb_2025_de.pdf)). A first pass over a year of that court's output would take about {{YEAR_H}} hours on one laptop GPU. The court's clerks would still review every decision; this figure is only the machine's part.
+
+Costs: the software and the model weights are open; there is no per-call fee and no external API, and no text leaves the machine. The running cost is one machine with enough memory for a 5 GB model; on our laptop the GPU was about four times faster than the CPU-only container. We did not time clerks working by hand, so we make no claim about time saved per decision.
+
+## 7. Limitations
 
 - The benchmark comes from one court. Cantonal decisions have other layouts and more personal detail (health, family, places), which our rules do not cover. Before using it in a court, measure it on a few dozen of that court's own decisions, which `src/evaluate.py` can do.
 - Synthetic names are common Swiss names, which is easier than rare or foreign names. Grammar sometimes no longer matches (a female name with a male pronoun), which may confuse the model slightly.
 - We measure only what the court already removes (names and the identifiers we inserted). Indirect identifiers, such as a rare profession in a small village, are not in the answer key and are left to the clerk.
 - A missed name is published if the clerk does not catch it. The tool is meant to be one step of the clerk's review, not to replace it.
-- Speed: {{SEC}} s per decision on an M1 Max with Metal. In the CPU-only Docker container on the same laptop it is several times slower. A court server with a GPU, or two parallel slots (`-np 2`), will be faster.
+- Speed: see *Value and cost*. The CPU-only container is slow enough that a court would want a GPU for daily use.
 
-## 7. Reproducibility
+## 8. Reproducibility
 
-- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384, temperature 0.
+- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384 (8,192 for the speed runs, as in the container), temperature 0.
 - Our numbers come from `python -m src.evaluate` run directly on the Mac against `llama-server` with Metal (the same code as in the container). `make eval-all` runs the three setups in Docker and writes `outputs/eval_<mode>/metrics.json`, `predictions.jsonl` and `errors.jsonl`. With `LLM_CACHE_DIR` set, Apertus answers are cached, so a second mode reuses the first mode's calls.
 - The benchmark is rebuilt deterministically with `make benchmark` (seed 7).
 - Weights: our numbers use the GGUF built by `scripts/convert_gguf.sh` from the official safetensors. `make model` downloads a public community conversion (`Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF`) with the same settings (Q4_K_M, end-of-generation id 68, same chat template; its vocabulary keeps 200 extra reserved rows). Small differences in the numbers are possible with that file.
 - Our outputs (metrics, every prediction, every error) are in `docs/results/`.
 
-## 8. Next steps
+## 9. Next steps
 
 - Measure on cantonal decisions with a partner court, and add their recurring patterns (land register numbers, plot numbers, vehicle data) to the rules.
 - Use the clerk's corrections from `audit.jsonl` as training data for a small LoRA adapter on Apertus.
@@ -107,7 +127,9 @@ Code: Apache-2.0. Report and documentation: CC-BY-4.0. Data files: CDLA-Permissi
 ## References
 
 - Swiss Federal Supreme Court, judgment 1C_394/2018 of 7 June 2019 (access to the decisions of the Geneva criminal court).
-- J. Niklaus, R. Mamié, M. Stürmer, D. Brunner, M. Gygli. *Automatic Anonymization of Swiss Federal Supreme Court Rulings.* Natural Legal Language Processing Workshop (NLLP), 2023.
+- J. Niklaus, R. Mamié, M. Stürmer, D. Brunner, M. Gygli. *Automatic Anonymization of Swiss Federal Supreme Court Rulings.* Natural Legal Language Processing Workshop (NLLP), 2023. arXiv:2310.04632.
+- Swiss federal courts. Joint press release on the 2025 annual reports, 17 March 2026.
+- spaCy `xx_ent_wiki_sm` multilingual NER model (evaluation baseline only), https://spacy.io/models/xx.
 - A. Nyffenegger, M. Stürmer, J. Niklaus. *Anonymity at Risk? Assessing Re-Identification Capabilities of Large Language Models in Court Decisions.* Findings of NAACL, 2024.
 - Swiss AI Initiative. *Apertus* model family, https://huggingface.co/swiss-ai.
 - entscheidsuche.ch, open collection of Swiss court decisions.

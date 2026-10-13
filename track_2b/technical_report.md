@@ -14,7 +14,7 @@ Swiss courts must make their decisions public. Before a decision goes out, someo
 
 Redacta puts Apertus v1.5 8B and a set of fixed rules side by side. Apertus lists every name in each part of the decision and gives it a role (party, private person, judge, lawyer, authority, ...). The rules catch identifiers that have a fixed shape (IBAN, AHV number, phone, licence plate, date of birth, street address) and stop names that follow a judge, clerk or lawyer title from being removed. The clerk sees the decision with every proposal marked, the reason for each one, and a short list of items the system is unsure about. Nothing is exported until those are decided, and every approval is logged.
 
-To measure accuracy without hand labelling, we took 180 published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the 144 test decisions, Redacta by default removes **94.7%** of the 1,044 strings that must go (rules alone: 14.0%; Apertus alone: 81.4%; on the 36 dev decisions: 90.8%). It wrongly removes **1.4%** of the 570 occurrences of judges', clerks' and lawyers' names. It takes 22 s per decision on a laptop.
+To measure accuracy without hand labelling, we took 180 published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the 144 test decisions, Redacta by default removes **96.1%** of the 1,044 strings that must go (rules alone: 14.0%; Apertus alone: 82.8%; on the 36 dev decisions: 93.9%). It wrongly removes **1.4%** of the 570 occurrences of judges', clerks' and lawyers' names. An off-the-shelf multilingual NER model, which we ran only as a baseline, finds 72.6% of the strings but also removes 59.0% of those judges', clerks' and lawyers' names, because it sees entity types, not roles. Redacta takes 22 s per decision on a laptop GPU and needs no external service.
 
 ## 2. Architecture
 
@@ -51,7 +51,7 @@ Pipeline for one decision (`src/anonymizer/pipeline.py`):
 
 The v1.5 8B checkpoint is multimodal. We kept only the text branch: a text-only config, the first 131,072 rows of the embedding table, and `<|assistant_end|>` (id 68) marked as end-of-generation; without that the model does not stop. `scripts/convert_gguf.sh` reproduces this from the official safetensors. The prompt (`src/anonymizer/llm.py`) states Swiss practice in two sentences (who is replaced, who stays) and asks only for a list of names with roles. The model never rewrites the text. That keeps every change visible and lets the code check each claim against the source.
 
-Why Apertus and not a smaller NER model: the decisive information is the *role*, not the entity type. "Me Christophe Pittet" (lawyer, stays) and "Christophe Pittet, recourant" (party, goes) are the same entity type. Apertus reads the procedural context in all three languages with one model. Fixed-shape identifiers and the title veto are left to rules, because rules are exact there. No other model is used anywhere in the system or in the evaluation.
+Why Apertus and not a smaller NER model: the decisive information is the *role*, not the entity type. "Me Christophe Pittet" (lawyer, stays) and "Christophe Pittet, recourant" (party, goes) are the same entity type. Apertus reads the procedural context in all three languages with one model. Fixed-shape identifiers and the title veto are left to rules, because rules are exact there. No other model is used in the system. For the evaluation only, we ran one off-the-shelf NER model (spaCy `xx_ent_wiki_sm`) as a baseline to test exactly this point (Section 5). It is not part of Redacta and is not in the Docker image.
 
 ## 4. Data
 
@@ -68,51 +68,72 @@ Task: given the refilled decision, which characters must be removed. A gold stri
 | Setup (test, 144 decisions) | Recall | Precision | Leak-free decisions | Protected redacted | Items to confirm / decision |
 |---|---|---|---|---|---|
 | Rules only (regex) | 14.0% | 57.9% | 0.0% | 0.0% | 1.8 |
-| Apertus only (no rules, no veto) | 81.4% | 69.0% | 19.4% | 3.2% | 3.3 |
-| **Redacta (Apertus + rules + veto)** | **94.7%** | **92.4%** | **76.4%** | **1.4%** | 3.9 |
+| Apertus only (no rules, no veto) | 82.8% | 70.0% | 19.4% | 3.2% | 3.3 |
+| Off-the-shelf NER, baseline only (spaCy `xx_ent_wiki_sm`, every PER/ORG) | 72.6% | 19.2% | 9.7% | 59.0% | 15.5 |
+| Same NER + Redacta's rules and veto (Apertus replaced by NER) | 84.5% | 28.6% | 42.4% | 11.2% | 11.7 |
+| **Redacta (Apertus + rules + veto)** | **96.1%** | **95.5%** | **77.8%** | **1.4%** | 3.9 |
+
+The NER rows answer the question whether a small entity tagger would do. With the same rules and veto around it, the tagger finds 84.5% instead of 96.1% and still removes 11.2% of the protected names, mostly in the signature lines ("Le Président : Hurni"), which our title rule does not cover. There Apertus reads the role from the context; the tagger only knows that a person is named. The baseline is `scripts/baseline_ner.py`, run outside Docker with its own requirements (`scripts/requirements-eval.txt`).
+
+**Related work.** The Federal Supreme Court's own study (Niklaus et al., 2023) fine-tuned BERT-type models on 119,156 rulings annotated with the entities the court anonymised. Recall rose from 83.8% (multilingual BERT) to 92.6% (a model pre-trained on Swiss legal text), with 92.3% precision. Their test data and their metric (entity-level scores on the court's own annotations) differ from ours, so the numbers are not directly comparable. The difference in setup is the point: they needed a large labelled corpus and a model trained for the task; Redacta uses no labelled training data and an open general model, prompted with two sentences of Swiss practice.
 
 By language and type (Redacta):
 
 | | Decisions | Recall | Precision | Leak-free | Protected redacted | Person | Organisation | Address | Date of birth |
 |---|---|---|---|---|---|---|---|---|---|
-| DE | 45 | 90.8% | 85.5% | 68.9% | 0.9% | 92.6% (n=190) | 80.0% (n=5) | 100.0% (n=19) | 100.0% (n=19) |
-| FR | 51 | 96.3% | 90.7% | 80.4% | 2.0% | 96.2% (n=316) | 100.0% (n=36) | 100.0% (n=37) | 100.0% (n=17) |
-| IT | 48 | 95.4% | 99.0% | 79.2% | 0.0% | 94.7% (n=300) | 95.1% (n=41) | 100.0% (n=40) | 100.0% (n=14) |
-| All | 144 | 94.7% | 92.4% | 76.4% | 1.4% | 94.8% (n=806) | 96.3% (n=82) | 100.0% (n=96) | 100.0% (n=50) |
+| DE | 45 | 94.6% | 91.2% | 71.1% | 0.9% | 97.4% (n=190) | 80.0% (n=5) | 100.0% (n=19) | 100.0% (n=19) |
+| FR | 51 | 97.1% | 94.9% | 80.4% | 2.0% | 97.2% (n=316) | 100.0% (n=36) | 100.0% (n=37) | 100.0% (n=17) |
+| IT | 48 | 96.0% | 99.0% | 81.2% | 0.0% | 95.3% (n=300) | 95.1% (n=41) | 100.0% (n=40) | 100.0% (n=14) |
+| All | 144 | 96.1% | 95.5% | 77.8% | 1.4% | 96.5% (n=806) | 96.3% (n=82) | 100.0% (n=96) | 100.0% (n=50) |
 
 ### What goes wrong
 
 We read every miss and every false positive on test (`docs/results/eval_full/errors.jsonl`).
 
-**A bug the test set exposed.** The first full run gave 89.8% recall. 41 of its 106 misses had one cause: Apertus labelled the party *recourant(e)*, and our check for public roles matched the substring *cour* (court) inside that word, so the party was kept. We fixed that one line (`role_redacts` in `src/anonymizer/llm.py`) and scored again with the same, cached Apertus answers. Because the bug was found on test, we also report the dev split, which played no part in the fix: 90.8% recall, 0.0% of protected names redacted. Both test runs are in `docs/results/` (`eval_full_before_fix/`).
+**A bug the test set exposed.** The first full run gave 89.8% recall. 41 of its 106 misses had one cause: Apertus labelled the party *recourant(e)*, and our check for public roles matched the substring *cour* (court) inside that word, so the party was kept. We fixed that one line (`role_redacts` in `src/anonymizer/llm.py`) and scored again with the same, cached Apertus answers. Because the bug was found on test, we also reported the dev split, which played no part in that fix: 90.8% recall, 0.0% of protected names redacted. Both test runs are in `docs/results/` (`eval_full_before_fix/`).
 
-**The remaining 55 misses on test:**
+**Two fixes made on dev only.** After that run we read the 36 dev decisions and changed two things, without looking at test again: (1) Apertus returned doctors with their title attached ("Dr. med. Francesca Grassi", "docteur Julien Berset"), and our checks then dropped the name. Medical titles are now stripped like other titles, and a doctor the model would keep goes to *you decide* instead, because courts usually remove a private doctor's name but may keep an insurer's medical adviser. (2) Chambers, directorates and secretariats (*Kammer*, *Chambre*, *Camera*, *-direktion*, *Sekretariat* ...) were added to the public-body list, and a lone role word (*Vermieterin*) is no longer read as a name. On dev, recall went from 90.8% to 93.9% and precision from 94.8% to 98.0%. We then scored test once: recall 94.7% → 96.1%, precision 92.4% → 95.5%, judge and lawyer names wrongly removed unchanged at 1.4%. No test decision got a new miss or a new false positive. The run before these fixes is in `docs/results/eval_full_before_dev_fixes/`.
 
-- *Private doctors (14).* "Dr. med. Manuela Steiner", "le docteur Luc Mercier": the title in front makes the pipeline treat the doctor as an official. Swiss courts usually remove a private doctor's name. These should go to *you decide*, not *kept*.
+**The remaining 41 misses on test:**
+
 - *Lawyers the court had anonymised (17).* Now and then the court removes a lawyer's name too, when it would point to the client (`à Me A.________`). Our refill turns these into gold strings, while Redacta keeps every lawyer by design. The clerk has to catch these; a rule cannot.
 - *Names the refill put in odd places (11).* The placeholder sometimes stood for a hospital, a company or a place ("Hôpital Camille Tissot", "in Urs Moser"), and Apertus did not list a person's name there. Part of this group is noise in our benchmark rather than a real leak.
 - *Place names (10).* We inserted a town or street where the court had removed one ("un immeuble sis à Sion"). Neither Apertus nor the rules look for these.
-- *Other (3):* a doctor labelled as an authority, a party read as a public service, a company read as the appellant.
+- *Other (3):* a doctor written "la Dre" and labelled as an authority, a party read as a public service, a company read only in part.
 
-**81 false positives.** They publish nothing wrong but cost the clerk a click each: courts and offices missing from our public-body list (47, e.g. *Chambre de surveillance*, *Sicherheitsdirektion*), role words read as names (19, e.g. *Gesuchstellerin*), judges or lawyers named later without a title (9, e.g. *Aubry Girardin*), and 6 addresses or dates.
+**47 false positives** (81 before the dev fixes). They publish nothing wrong but cost the clerk a click each: public bodies still missing from our list (26, e.g. *Verwaltungsrekurskommission*, *État de Vaud*, *Unisanté*), common words read as names (7, e.g. *Gartenbaufirma*), judges or lawyers named later without a title (9, e.g. *Aubry Girardin*), and 5 addresses, dates or places.
 
-## 6. Limitations
+## 6. Value and cost
+
+Measured on the laptop used for this report (Apple M1 Max, 32 GB), without cached answers:
+
+| Where Apertus runs | Decisions | Seconds per decision |
+|---|---|---|
+| llama.cpp with Metal (laptop GPU), all test decisions, first full run | 144 | 22.4 |
+| llama.cpp with Metal, first 10 test decisions, today's code | 10 | 26.6 |
+| `make run` container, CPU only (a Colima VM with 8 vCPUs and 10 GB) | 10 | 109.5 |
+
+The first 10 test decisions average 8,526 characters, longer than the test average of 6,459. At 22.4 s per decision, one such machine processes about 3,900 decisions a day with one model slot. On the same ten decisions the CPU-only container is 4.1 times slower than Metal, about 790 decisions of that length a day. In 2025 the Federal Supreme Court delivered 7,883 judgments ([joint press release of the federal courts, 17 March 2026](https://www.bvger.ch/bvger/documents/geschaeftsberichte/2025/gemeinsame_mm_gb_2025_de.pdf)). A first pass over a year of that court's output would take about 49 hours on one laptop GPU. The court's clerks would still review every decision; this figure is only the machine's part.
+
+Costs: the software and the model weights are open; there is no per-call fee and no external API, and no text leaves the machine. The running cost is one machine with enough memory for a 5 GB model; on our laptop the GPU was about four times faster than the CPU-only container. We did not time clerks working by hand, so we make no claim about time saved per decision.
+
+## 7. Limitations
 
 - The benchmark comes from one court. Cantonal decisions have other layouts and more personal detail (health, family, places), which our rules do not cover. Before using it in a court, measure it on a few dozen of that court's own decisions, which `src/evaluate.py` can do.
 - Synthetic names are common Swiss names, which is easier than rare or foreign names. Grammar sometimes no longer matches (a female name with a male pronoun), which may confuse the model slightly.
 - We measure only what the court already removes (names and the identifiers we inserted). Indirect identifiers, such as a rare profession in a small village, are not in the answer key and are left to the clerk.
 - A missed name is published if the clerk does not catch it. The tool is meant to be one step of the clerk's review, not to replace it.
-- Speed: 22 s per decision on an M1 Max with Metal. In the CPU-only Docker container on the same laptop it is several times slower. A court server with a GPU, or two parallel slots (`-np 2`), will be faster.
+- Speed: see *Value and cost*. The CPU-only container is slow enough that a court would want a GPU for daily use.
 
-## 7. Reproducibility
+## 8. Reproducibility
 
-- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384, temperature 0.
+- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384 (8,192 for the speed runs, as in the container), temperature 0.
 - Our numbers come from `python -m src.evaluate` run directly on the Mac against `llama-server` with Metal (the same code as in the container). `make eval-all` runs the three setups in Docker and writes `outputs/eval_<mode>/metrics.json`, `predictions.jsonl` and `errors.jsonl`. With `LLM_CACHE_DIR` set, Apertus answers are cached, so a second mode reuses the first mode's calls.
 - The benchmark is rebuilt deterministically with `make benchmark` (seed 7).
 - Weights: our numbers use the GGUF built by `scripts/convert_gguf.sh` from the official safetensors. `make model` downloads a public community conversion (`Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF`) with the same settings (Q4_K_M, end-of-generation id 68, same chat template; its vocabulary keeps 200 extra reserved rows). Small differences in the numbers are possible with that file.
 - Our outputs (metrics, every prediction, every error) are in `docs/results/`.
 
-## 8. Next steps
+## 9. Next steps
 
 - Measure on cantonal decisions with a partner court, and add their recurring patterns (land register numbers, plot numbers, vehicle data) to the rules.
 - Use the clerk's corrections from `audit.jsonl` as training data for a small LoRA adapter on Apertus.
@@ -126,7 +147,9 @@ Code: Apache-2.0. Report and documentation: CC-BY-4.0. Data files: CDLA-Permissi
 ## References
 
 - Swiss Federal Supreme Court, judgment 1C_394/2018 of 7 June 2019 (access to the decisions of the Geneva criminal court).
-- J. Niklaus, R. Mamié, M. Stürmer, D. Brunner, M. Gygli. *Automatic Anonymization of Swiss Federal Supreme Court Rulings.* Natural Legal Language Processing Workshop (NLLP), 2023.
+- J. Niklaus, R. Mamié, M. Stürmer, D. Brunner, M. Gygli. *Automatic Anonymization of Swiss Federal Supreme Court Rulings.* Natural Legal Language Processing Workshop (NLLP), 2023. arXiv:2310.04632.
+- Swiss federal courts. Joint press release on the 2025 annual reports, 17 March 2026.
+- spaCy `xx_ent_wiki_sm` multilingual NER model (evaluation baseline only), https://spacy.io/models/xx.
 - A. Nyffenegger, M. Stürmer, J. Niklaus. *Anonymity at Risk? Assessing Re-Identification Capabilities of Large Language Models in Court Decisions.* Findings of NAACL, 2024.
 - Swiss AI Initiative. *Apertus* model family, https://huggingface.co/swiss-ai.
 - entscheidsuche.ch, open collection of Swiss court decisions.

@@ -1,0 +1,20 @@
+{
+  "note": "python -m src.evaluate --mode full --split test --first 10, no LLM_CACHE_DIR (every Apertus call live). Laptop: Apple M1 Max 32 GB.",
+  "metal_10": {
+    "sec_per_doc": 26.6,
+    "llm_calls": 62,
+    "where": "host llama-server (Homebrew llama.cpp, Metal, -ngl 99, -c 8192, -np 1)"
+  },
+  "docker_cpu_10": {
+    "sec_per_doc": 109.5,
+    "llm_calls": 62,
+    "where": "docker compose --profile airgap: ghcr.io/ggml-org/llama.cpp:server-b11459, CPU only",
+    "vm": "a Colima VM with 8 vCPUs and 10 GB"
+  },
+  "first_full_run_144": {
+    "sec_per_doc": 22.4,
+    "where": "host llama-server, Metal, -c 16384, first test run (eval_full_before_fix)"
+  },
+  "chars_first10": 8526,
+  "chars_test": 6459
+}

@@ -48,6 +48,29 @@ def main():
         v[f"LF_{tag}"] = pct(x["leak_free_docs"])
         v[f"PROT_{tag}"] = pct(x["protected_redacted"])
         v[f"IC_{tag}"] = f"{x['items_to_confirm_per_doc']:.1f}"
+    ld = lambda d: json.load(open(res / d / "metrics.json"))
+    dev1 = ld("eval_full_dev_before_dev_fixes")["all"]
+    v2 = ld("eval_full_before_dev_fixes")["all"]
+    errs = [json.loads(l) for l in open(res / "eval_full" / "errors.jsonl", encoding="utf-8")]
+    v.update({"R_DEV_V1": pct(dev1["recall"]), "PROT_DEV_V1": pct(dev1["protected_redacted"]),
+              "P_DEV_V1": pct(dev1["precision"]), "P_DEV": pct(dev["precision"]),
+              "R_FULL_V2": pct(v2["recall"]), "P_FULL_V2": pct(v2["precision"]),
+              "MISS_N": str(sum(len(e["missed"]) for e in errs)), "FP_N": str(sum(len(e["false_pos"]) for e in errs))})
+    for key, tag in (("ner", "NER"), ("ner_rules", "NERR")):
+        x = ld(f"eval_{key}")["all"]
+        v[f"R_{tag}"], v[f"P_{tag}"] = pct(x["recall"]), pct(x["precision"])
+        v[f"LF_{tag}"], v[f"PROT_{tag}"] = pct(x["leak_free_docs"]), pct(x["protected_redacted"])
+        v[f"IC_{tag}"] = f"{x['items_to_confirm_per_doc']:.1f}"
+    # speed: only runs without cached answers count
+    sp = json.load(open(res / "speed" / "speed.json"))
+    sec = before["sec_per_doc"]
+    v.update({"SEC_FULLRUN": f"{sec:.1f}", "SEC10_METAL": f"{sp['metal_10']['sec_per_doc']:.1f}",
+              "SEC10_CPU": f"{sp['docker_cpu_10']['sec_per_doc']:.1f}",
+              "CPU_X": f"{sp['docker_cpu_10']['sec_per_doc'] / sp['metal_10']['sec_per_doc']:.1f}", "CPU_VM": sp["docker_cpu_10"]["vm"],
+              "CHARS10": f"{sp['chars_first10']:,}", "CHARS_TEST": f"{sp['chars_test']:,}",
+              "DAY_METAL": f"{round(86400 / sec, -2):,.0f}",
+              "DAY_CPU": f"{round(86400 / sp['docker_cpu_10']['sec_per_doc'], -1):,.0f}",
+              "YEAR_H": f"{7883 * sec / 3600:.0f}"})
     lines = ["| | Decisions | Recall | Precision | Leak-free | Protected redacted | Person | Organisation | Address | Date of birth |",
              "|---|---|---|---|---|---|---|---|---|---|"]
     for k in ("de", "fr", "it", "all"):

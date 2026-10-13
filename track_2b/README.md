@@ -6,12 +6,14 @@ Before a Swiss court publishes a decision, a clerk replaces the parties' names w
 
 **Measured on 144 test decisions of the Federal Supreme Court (German, French, Italian)** with synthetic names put back where the court's placeholders were:
 
-| | Redacta | Rules only |
-|---|---|---|
-| Strings that must go, found by default | **94.7%** | 14.0% |
-| Judge, clerk and lawyer names wrongly removed | **1.4%** | 0.0% |
-| Decisions with nothing missed | 76.4% | 0.0% |
-| Items for the clerk to confirm per decision | 3.9 | — |
+| | Redacta | Off-the-shelf NER (baseline only) | Rules only |
+|---|---|---|---|
+| Strings that must go, found by default | **96.1%** | 72.6% | 14.0% |
+| Judge, clerk and lawyer names wrongly removed | **1.4%** | 59.0% | 0.0% |
+| Decisions with nothing missed | 77.8% | 9.7% | 0.0% |
+| Items for the clerk to confirm per decision | 3.9 | 15.5 | — |
+
+The NER baseline is spaCy `xx_ent_wiki_sm` with every person and organisation redacted; it is used only for this comparison, not in Redacta. Speed on the same ten test decisions: 26.6 s per decision with Apertus on a laptop GPU (Metal), 109.5 s in the CPU-only container.
 
 Details, method and limitations: [technical report](technical_report.md) ([PDF](Redacta_Report.pdf)). Demo video: (link in the submission form)
 
