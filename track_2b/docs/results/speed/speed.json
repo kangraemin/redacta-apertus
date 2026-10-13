@@ -1,19 +1,41 @@
 {
-  "note": "python -m src.evaluate --mode full --split test --first 10, no LLM_CACHE_DIR (every Apertus call live). Laptop: Apple M1 Max 32 GB.",
-  "metal_10": {
-    "sec_per_doc": 26.6,
-    "llm_calls": 62,
-    "where": "host llama-server (Homebrew llama.cpp, Metal, -ngl 99, -c 8192, -np 1)"
+  "note": "Representative figures use the weights `make model` downloads (Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF, revision 248ec68, sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299), code at commit f6bcf3b, no LLM_CACHE_DIR (every Apertus call live). Laptop: Apple M1 Max 32 GB. Measured 2026-10-13.",
+  "community_metal_144": {
+    "sec_per_doc": 25.8,
+    "llm_calls": 687,
+    "docs": 144,
+    "where": "host llama-server (Homebrew llama.cpp build 11429, Metal, -ngl 99, -c 8192, -np 1)",
+    "results": "docs/results/eval_full_community/"
   },
-  "docker_cpu_10": {
-    "sec_per_doc": 109.5,
+  "community_metal_first10": {
+    "sec_per_doc": 27.2,
+    "docs": 10,
+    "from": "the first 10 rows of eval_full_community/predictions.jsonl"
+  },
+  "community_docker_cpu_10": {
+    "sec_per_doc": 110.4,
     "llm_calls": 62,
+    "docs": 10,
     "where": "docker compose --profile airgap: ghcr.io/ggml-org/llama.cpp:server-b11459, CPU only",
-    "vm": "a Colima VM with 8 vCPUs and 10 GB"
+    "vm": "a Colima VM with 8 vCPUs and 10 GB",
+    "results": "docker_cpu_10_community/"
   },
-  "first_full_run_144": {
-    "sec_per_doc": 22.4,
-    "where": "host llama-server, Metal, -c 16384, first test run (eval_full_before_fix)"
+  "earlier_own_gguf": {
+    "metal_10": {
+      "sec_per_doc": 26.6,
+      "llm_calls": 62,
+      "where": "host llama-server (Homebrew llama.cpp, Metal, -ngl 99, -c 8192, -np 1)"
+    },
+    "docker_cpu_10": {
+      "sec_per_doc": 109.5,
+      "llm_calls": 62,
+      "where": "docker compose --profile airgap: ghcr.io/ggml-org/llama.cpp:server-b11459, CPU only",
+      "vm": "a Colima VM with 8 vCPUs and 10 GB"
+    },
+    "first_full_run_144": {
+      "sec_per_doc": 22.4,
+      "where": "host llama-server, Metal, -c 16384, first test run (eval_full_before_fix)"
+    }
   },
   "chars_first10": 8526,
   "chars_test": 6459

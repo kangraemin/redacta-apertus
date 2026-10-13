@@ -1,0 +1,48 @@
+{"id": "CH_BGer_001_1C-473-2026_2026-09-09", "missed": [], "false_pos": ["Unbekannt", "Unbekannt", "Unbekannt"]}
+{"id": "CH_BGer_001_1C-545-2026_2026-09-30", "missed": [], "false_pos": ["Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht", "Verwaltungsgericht"]}
+{"id": "CH_BGer_001_1D-8-2026_2026-09-16", "missed": [], "false_pos": ["Municipio di Chiasso", "Municipio di Chiasso", "piazza Bernasconi 1, 6830 Chiasso"]}
+{"id": "CH_BGer_002_2C-475-2026_2026-09-18", "missed": [], "false_pos": ["Prorektor Studium", "Rämistrasse 101, 8092 Zürich"]}
+{"id": "CH_BGer_002_2C-482-2026_2026-09-09", "missed": [], "false_pos": ["Conseil d'Etat", "Chancellerie d'État", "Chancellerie d'État", "Chancellerie d'État"]}
+{"id": "CH_BGer_004_4A-294-2026_2026-09-16", "missed": [], "false_pos": ["C/24782/2023"]}
+{"id": "CH_BGer_004_4A-391-2025_2025-11-13", "missed": ["Stefano Bianchi"], "false_pos": []}
+{"id": "CH_BGer_004_4A-397-2026_2026-09-15", "missed": ["Sion"], "false_pos": ["C/20029/2025"]}
+{"id": "CH_BGer_004_4A-421-2026_2026-09-17", "missed": ["Urs Moser"], "false_pos": ["Kiss", "Kiss"]}
+{"id": "CH_BGer_004_4D-133-2026_2026-09-15", "missed": ["Lausanne"], "false_pos": []}
+{"id": "CH_BGer_004_4D-150-2026_2026-09-07", "missed": ["Montreux"], "false_pos": ["Hurni", "Hurni"]}
+{"id": "CH_BGer_004_4D-152-2026_2026-09-28", "missed": ["Garten-strasse"], "false_pos": ["Kiss", "Kiss"]}
+{"id": "CH_BGer_004_4D-93-2026_2026-07-16", "missed": ["Sara Grassi", "Grassi", "Grassi", "Valentina Zanetti"], "false_pos": ["Pretore del distretto di Lugano"]}
+{"id": "CH_BGer_004_4D-94-2026_2026-09-03", "missed": [], "false_pos": ["État de Vaud", "État de Vaud"]}
+{"id": "CH_BGer_004_4F-20-2026_2026-09-14", "missed": [], "false_pos": ["État de Vaud"]}
+{"id": "CH_BGer_004_4F-24-2026_2026-09-24", "missed": [], "false_pos": ["Kiss", "Kiss"]}
+{"id": "CH_BGer_005_5A-571-2026_2026-08-18", "missed": ["Alessandro Colombo"], "false_pos": []}
+{"id": "CH_BGer_005_5A-694-2026_2026-09-15", "missed": ["Élodie Gay", "Élodie Savary"], "false_pos": []}
+{"id": "CH_BGer_005_5A-708-2026_2026-09-11", "missed": ["Luca Bernasconi", "Luca Bernasconi"], "false_pos": []}
+{"id": "CH_BGer_005_5A-718-2026_2026-09-15", "missed": ["Silvia Fontana"], "false_pos": []}
+{"id": "CH_BGer_005_5A-780-2026_2026-09-08", "missed": ["Nathalie Savary"], "false_pos": []}
+{"id": "CH_BGer_005_5A-792-2026_2026-08-28", "missed": ["Giovanni Bottani", "Bottani"], "false_pos": ["Confederazione svizzera"]}
+{"id": "CH_BGer_005_5A-860-2026_2026-09-28", "missed": ["Jean-Marc Clément"], "false_pos": []}
+{"id": "CH_BGer_005_5A-867-2026_2026-09-15", "missed": ["Sylvie Pittet", "Pascal Ducret"], "false_pos": []}
+{"id": "CH_BGer_005_5A-871-2026_2026-09-22", "missed": [], "false_pos": ["Bezirksgericht Kreuzlingen", "Kreuzlingen", "Bezirksgericht Kreuzlingen"]}
+{"id": "CH_BGer_005_5A-878-2026_2026-09-17", "missed": ["Rey"], "false_pos": []}
+{"id": "CH_BGer_005_5A-890-2026_2026-09-23", "missed": ["Karin Hofmann"], "false_pos": []}
+{"id": "CH_BGer_005_5A-906-2026_2026-09-24", "missed": ["Sonnenstrasse"], "false_pos": []}
+{"id": "CH_BGer_005_5A-922-2026_2026-09-24", "missed": [], "false_pos": ["Medizinische Dienste des Gesundheitsdepartements"]}
+{"id": "CH_BGer_005_5A-939-2026_2026-09-24", "missed": ["Ahornstrasse"], "false_pos": ["PS260361-O/U"]}
+{"id": "CH_BGer_005_5A-953-2026_2026-09-25", "missed": [], "false_pos": ["ZB.2026.33"]}
+{"id": "CH_BGer_005_5A-971-2025_2025-11-19", "missed": ["Maggi Informatica", "Manuela Cattaneo"], "false_pos": []}
+{"id": "CH_BGer_005_5D-37-2026_2026-09-28", "missed": ["Gartenweg"], "false_pos": ["Gartenbaufirma", "Gartenbaufirma", "Gartenbaufirma", "Gartenbaufirma"]}
+{"id": "CH_BGer_006_6B-408-2026_2026-09-02", "missed": ["Camille Chevalley"], "false_pos": []}
+{"id": "CH_BGer_007_7B-1042-2026_2026-09-15", "missed": ["Yvonne Bühler"], "false_pos": ["Amtsgericht Solothurn-Lebern"]}
+{"id": "CH_BGer_007_7B-892-2026_2026-09-15", "missed": ["Patrick Wyss", "Wyss"], "false_pos": []}
+{"id": "CH_BGer_007_7F-62-2026_2026-09-17", "missed": ["Daniela Baumann"], "false_pos": []}
+{"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["Camille Tissot"], "false_pos": []}
+{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": [], "false_pos": ["21 mai 1965", "Unisanté", "Unisanté", "Unisanté", "Unisanté"]}
+{"id": "CH_BGer_008_8C-341-2026_2026-09-01", "missed": [], "false_pos": ["Centre social régional de la Broye-Vully", "Centre social régional de la Broye-Vully", "rue des Terreaux 1, 1530 Payerne"]}
+{"id": "CH_BGer_008_8C-342-2026_2026-08-13", "missed": ["Manuela Vassalli"], "false_pos": ["Unia", "Unia"]}
+{"id": "CH_BGer_008_8C-421-2026_2026-09-08", "missed": [], "false_pos": ["ABI Aerztliches Begutachtungsinstitut GmbH"]}
+{"id": "CH_BGer_008_8C-578-2026_2026-09-16", "missed": ["Beat Zimmermann"], "false_pos": []}
+{"id": "CH_BGer_009_9C-465-2026_2026-09-15", "missed": ["Chur"], "false_pos": []}
+{"id": "CH_BGer_009_9C-466-2026_2026-09-15", "missed": ["Aarau"], "false_pos": []}
+{"id": "CH_BGer_009_9C-467-2026_2026-09-15", "missed": ["Chur"], "false_pos": []}
+{"id": "CH_BGer_009_9C-491-2026_2026-09-22", "missed": [], "false_pos": ["ASSURA-Basis SA", "ASSURA-Basis SA"]}
+{"id": "CH_BGer_015_12T-1-2026_2026-08-21", "missed": [], "false_pos": ["Chaix Lüscher"]}

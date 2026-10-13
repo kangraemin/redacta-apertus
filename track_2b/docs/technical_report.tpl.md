@@ -10,11 +10,11 @@ Redacta proposes which words to remove from a Swiss court decision before it is 
 
 ## 1. Summary
 
-Swiss courts must make their decisions public. Before a decision goes out, someone replaces the names of parties, relatives, witnesses and private companies with letters (`A.________`), and removes addresses and dates of birth. Judges, clerks, lawyers and authorities stay named. Unpublished decisions are confidential, so the text cannot be sent to a commercial cloud model, and the work is still largely manual. In 1C_394/2018 the Federal Supreme Court held that the Geneva criminal court could not limit access to its decisions on the grounds that anonymising about 22,000 of them was too much work.
+Swiss courts must make their decisions public. Before a decision goes out, someone replaces the names of parties, relatives, witnesses and private companies with letters (`A.________`), and removes addresses and dates of birth. Judges, clerks, lawyers and authorities stay named. Unpublished decisions are confidential, so the text cannot be sent to a commercial cloud model. Trained staff do this work. At the Federal Supreme Court, paralegals are assisted by a tool (Anom2) that finds entities with regular expressions and other methods, and the court's own study added a BERT model to it (Niklaus et al., 2023). In 1C_394/2018 the Federal Supreme Court held that the Geneva criminal court could not limit access to its decisions on the grounds that anonymising about 22,000 of them was too much work.
 
 Redacta puts Apertus v1.5 8B and a set of fixed rules side by side. Apertus lists every name in each part of the decision and gives it a role (party, private person, judge, lawyer, authority, ...). The rules catch identifiers that have a fixed shape (IBAN, AHV number, phone, licence plate, date of birth, street address) and stop names that follow a judge, clerk or lawyer title from being removed. The clerk sees the decision with every proposal marked, the reason for each one, and a short list of items the system is unsure about. Nothing is exported until those are decided, and every approval is logged.
 
-To measure accuracy without hand labelling, we took {{N_ALL}} published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the {{N_TEST}} test decisions, Redacta by default removes **{{R_FULL}}** of the {{G_TEST}} strings that must go (rules alone: {{R_RULES}}; Apertus alone: {{R_AP}}; on the {{N_DEV_DOCS}} dev decisions: {{R_DEV}}). It wrongly removes **{{PROT_FULL}}** of the {{PROT_N}} occurrences of judges', clerks' and lawyers' names. An off-the-shelf multilingual NER model, which we ran only as a baseline, finds {{R_NER}} of the strings but also removes {{PROT_NER}} of those judges', clerks' and lawyers' names, because it sees entity types, not roles. Redacta takes {{SEC}} s per decision on a laptop GPU and needs no external service.
+To measure accuracy without hand labelling, we took {{N_ALL}} published Federal Supreme Court decisions (German, French, Italian), which are already anonymised, and put synthetic names, addresses and birth dates back where the placeholders were. Each inserted string has known offsets, so the answer key is exact. On the {{N_TEST}} test decisions, Redacta by default removes **{{R_FULL}}** of the {{G_TEST}} strings that must go (rules alone: {{R_RULES}}; Apertus alone: {{R_AP}}; on the {{N_DEV_DOCS}} dev decisions: {{R_DEV}}). It wrongly removes **{{PROT_FULL}}** of the {{PROT_N}} occurrences of judges', clerks' and lawyers' names. An off-the-shelf multilingual NER model, which we ran only as a baseline, finds {{R_NER}} of the strings but also removes {{PROT_NER}} of those judges', clerks' and lawyers' names, because it sees entity types, not roles. Redacta takes {{SEC_FULLRUN}} s per decision on a laptop GPU ({{SEC10_CPU}} s on CPU in Docker) and needs no external service. With the community weights that `make model` downloads, the numbers are almost the same ({{R_COM}} found, {{PROT_COM}} wrongly removed).
 
 ## 2. Architecture
 
@@ -72,6 +72,7 @@ Task: given the refilled decision, which characters must be removed. A gold stri
 | Off-the-shelf NER, baseline only (spaCy `xx_ent_wiki_sm`, every PER/ORG) | {{R_NER}} | {{P_NER}} | {{LF_NER}} | {{PROT_NER}} | {{IC_NER}} |
 | Same NER + Redacta's rules and veto (Apertus replaced by NER) | {{R_NERR}} | {{P_NERR}} | {{LF_NERR}} | {{PROT_NERR}} | {{IC_NERR}} |
 | **Redacta (Apertus + rules + veto)** | **{{R_FULL}}** | **{{P_FULL}}** | **{{LF_FULL}}** | **{{PROT_FULL}}** | {{IC_FULL}} |
+| Redacta with the weights `make model` downloads (community GGUF, see §8) | {{R_COM}} | {{P_COM}} | {{LF_COM}} | {{PROT_COM}} | {{IC_COM}} |
 
 The NER rows answer the question whether a small entity tagger would do. With the same rules and veto around it, the tagger finds {{R_NERR}} instead of {{R_FULL}} and still removes {{PROT_NERR}} of the protected names, mostly in the signature lines ("Le Président : Hurni"), which our title rule does not cover. There Apertus reads the role from the context; the tagger only knows that a person is named. The baseline is `scripts/baseline_ner.py`, run outside Docker with its own requirements (`scripts/requirements-eval.txt`).
 
@@ -85,17 +86,17 @@ By language and type (Redacta):
 
 ## 6. Value and cost
 
-Measured on the laptop used for this report (Apple M1 Max, 32 GB), without cached answers:
+Measured on the laptop used for this report (Apple M1 Max, 32 GB) with the weights `make model` downloads and the code at commit `f6bcf3b`, without cached answers (every Apertus call live):
 
 | Where Apertus runs | Decisions | Seconds per decision |
 |---|---|---|
-| llama.cpp with Metal (laptop GPU), all test decisions, first full run | {{N_TEST}} | {{SEC_FULLRUN}} |
-| llama.cpp with Metal, first 10 test decisions, today's code | 10 | {{SEC10_METAL}} |
-| `make run` container, CPU only ({{CPU_VM}}) | 10 | {{SEC10_CPU}} |
+| llama.cpp with Metal (laptop GPU), all test decisions | {{N_TEST}} | **{{SEC_FULLRUN}}** |
+| llama.cpp with Metal, first 10 test decisions | 10 | {{SEC10_METAL}} |
+| `make run` container, CPU only ({{CPU_VM}}), first 10 test decisions | 10 | {{SEC10_CPU}} |
 
-The first 10 test decisions average {{CHARS10}} characters, longer than the test average of {{CHARS_TEST}}. At {{SEC_FULLRUN}} s per decision, one such machine processes about {{DAY_METAL}} decisions a day with one model slot. On the same ten decisions the CPU-only container is {{CPU_X}} times slower than Metal, about {{DAY_CPU}} decisions of that length a day. In 2025 the Federal Supreme Court delivered 7,883 judgments ([joint press release of the federal courts, 17 March 2026](https://www.bvger.ch/bvger/documents/geschaeftsberichte/2025/gemeinsame_mm_gb_2025_de.pdf)). A first pass over a year of that court's output would take about {{YEAR_H}} hours on one laptop GPU. The court's clerks would still review every decision; this figure is only the machine's part.
+The first 10 test decisions average {{CHARS10}} characters, longer than the test average of {{CHARS_TEST}}. On those ten, the CPU-only container is {{CPU_X}} times slower than Metal; with our own GGUF the same ten took {{SEC10_METAL_OWN}} s and {{SEC10_CPU_OWN}} s. Running continuously at {{SEC_FULLRUN}} s per decision, one such machine with one model slot would process about {{DAY_METAL}} decisions a day; the CPU-only container about {{DAY_CPU}} decisions of that length. In 2025 the Federal Supreme Court delivered 7,883 judgments ([joint press release of the federal courts, 17 March 2026](https://www.bvger.ch/bvger/documents/geschaeftsberichte/2025/gemeinsame_mm_gb_2025_de.pdf)). A first pass over a year of that court's output would take about {{YEAR_H}} hours on one laptop GPU. The court's clerks would still review every decision; this figure is only the machine's part.
 
-Costs: the software and the model weights are open; there is no per-call fee and no external API, and no text leaves the machine. The running cost is one machine with enough memory for a 5 GB model; on our laptop the GPU was about four times faster than the CPU-only container. We did not time clerks working by hand, so we make no claim about time saved per decision.
+Costs: the software and the model weights are open; there is no per-call fee and no external API, and no text leaves the machine. The running cost is one machine with enough memory for a 5 GB model; on our laptop the GPU was about four times faster than the CPU-only container. We did not time clerks doing this work, with or without Redacta, so we make no claim about time saved per decision.
 
 ## 7. Limitations
 
@@ -107,10 +108,10 @@ Costs: the software and the model weights are open; there is no per-call fee and
 
 ## 8. Reproducibility
 
-- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384 (8,192 for the speed runs, as in the container), temperature 0.
+- Hardware for the numbers: Apple M1 Max, 32 GB, macOS; llama.cpp `llama-server` (Metal), Q4_K_M, context 16,384 for the accuracy tables (8,192 for the community-weights run and the speed runs, as in the container), temperature 0.
 - Our numbers come from `python -m src.evaluate` run directly on the Mac against `llama-server` with Metal (the same code as in the container). `make eval-all` runs the three setups in Docker and writes `outputs/eval_<mode>/metrics.json`, `predictions.jsonl` and `errors.jsonl`. With `LLM_CACHE_DIR` set, Apertus answers are cached, so a second mode reuses the first mode's calls.
 - The benchmark is rebuilt deterministically with `make benchmark` (seed 7).
-- Weights: our numbers use the GGUF built by `scripts/convert_gguf.sh` from the official safetensors. `make model` downloads a public community conversion (`Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF`) with the same settings (Q4_K_M, end-of-generation id 68, same chat template; its vocabulary keeps 200 extra reserved rows). Small differences in the numbers are possible with that file.
+- Weights: the accuracy tables use the GGUF built by `scripts/convert_gguf.sh` from the official safetensors. `make model` downloads a public community conversion (`Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF`, revision `248ec68`, SHA-256 `a037df8d…f299`) with the same settings (Q4_K_M, end-of-generation id 68, same chat template; its vocabulary keeps 200 extra reserved rows). We downloaded it with `make model` into a fresh clone and ran the whole test split with it, with no cached answers: recall {{R_COM}} (ours {{R_FULL}}), precision {{P_COM}} ({{P_FULL}}), leak-free {{LF_COM}} ({{LF_FULL}}), protected names wrongly removed {{PROT_COM}} ({{PROT_FULL}}). It misses {{MISS_COM}} strings (ours {{MISS_N}}) and adds {{FP_COM}} false positives (ours {{FP_N}}), mostly more courts, authorities and file numbers. Results: `docs/results/eval_full_community/`. The speed figures in *Value and cost* come from this run.
 - Our outputs (metrics, every prediction, every error) are in `docs/results/`.
 
 ## 9. Next steps

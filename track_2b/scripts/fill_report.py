@@ -61,15 +61,25 @@ def main():
         v[f"R_{tag}"], v[f"P_{tag}"] = pct(x["recall"]), pct(x["precision"])
         v[f"LF_{tag}"], v[f"PROT_{tag}"] = pct(x["leak_free_docs"]), pct(x["protected_redacted"])
         v[f"IC_{tag}"] = f"{x['items_to_confirm_per_doc']:.1f}"
-    # speed: only runs without cached answers count
+    # weights that `make model` downloads (community GGUF), run without cached answers
+    com = ld("eval_full_community")["all"]
+    cerrs = [json.loads(l) for l in open(res / "eval_full_community" / "errors.jsonl", encoding="utf-8")]
+    v.update({"R_COM": pct(com["recall"]), "P_COM": pct(com["precision"]), "LF_COM": pct(com["leak_free_docs"]),
+              "PROT_COM": pct(com["protected_redacted"]), "IC_COM": f"{com['items_to_confirm_per_doc']:.1f}",
+              "MISS_COM": str(sum(len(e["missed"]) for e in cerrs)),
+              "FP_COM": str(sum(len(e["false_pos"]) for e in cerrs))})
+    # speed: only runs without cached answers count; all from the community weights
     sp = json.load(open(res / "speed" / "speed.json"))
-    sec = before["sec_per_doc"]
-    v.update({"SEC_FULLRUN": f"{sec:.1f}", "SEC10_METAL": f"{sp['metal_10']['sec_per_doc']:.1f}",
-              "SEC10_CPU": f"{sp['docker_cpu_10']['sec_per_doc']:.1f}",
-              "CPU_X": f"{sp['docker_cpu_10']['sec_per_doc'] / sp['metal_10']['sec_per_doc']:.1f}", "CPU_VM": sp["docker_cpu_10"]["vm"],
+    sec = sp["community_metal_144"]["sec_per_doc"]
+    m10, c10 = sp["community_metal_first10"]["sec_per_doc"], sp["community_docker_cpu_10"]["sec_per_doc"]
+    own = sp["earlier_own_gguf"]
+    v.update({"SEC_FULLRUN": f"{sec:.1f}", "SEC10_METAL": f"{m10:.1f}", "SEC10_CPU": f"{c10:.1f}",
+              "CPU_X": f"{c10 / m10:.1f}", "CPU_VM": sp["community_docker_cpu_10"]["vm"],
+              "SEC10_METAL_OWN": f"{own['metal_10']['sec_per_doc']:.1f}",
+              "SEC10_CPU_OWN": f"{own['docker_cpu_10']['sec_per_doc']:.1f}",
               "CHARS10": f"{sp['chars_first10']:,}", "CHARS_TEST": f"{sp['chars_test']:,}",
               "DAY_METAL": f"{round(86400 / sec, -2):,.0f}",
-              "DAY_CPU": f"{round(86400 / sp['docker_cpu_10']['sec_per_doc'], -1):,.0f}",
+              "DAY_CPU": f"{round(86400 / c10, -1):,.0f}",
               "YEAR_H": f"{7883 * sec / 3600:.0f}"})
     lines = ["| | Decisions | Recall | Precision | Leak-free | Protected redacted | Person | Organisation | Address | Date of birth |",
              "|---|---|---|---|---|---|---|---|---|---|"]

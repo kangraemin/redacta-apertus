@@ -13,7 +13,7 @@ Before a Swiss court publishes a decision, a clerk replaces the parties' names w
 | Decisions with nothing missed | 77.8% | 9.7% | 0.0% |
 | Items for the clerk to confirm per decision | 3.9 | 15.5 | — |
 
-The NER baseline is spaCy `xx_ent_wiki_sm` with every person and organisation redacted; it is used only for this comparison, not in Redacta. Speed on the same ten test decisions: 26.6 s per decision with Apertus on a laptop GPU (Metal), 109.5 s in the CPU-only container.
+The NER baseline is spaCy `xx_ent_wiki_sm` with every person and organisation redacted; it is used only for this comparison, not in Redacta. With the weights that `make model` downloads (a community GGUF), the 144 test decisions give 96.2% found and 1.4% wrongly removed. Speed with those weights: 25.8 s per decision over the 144 test decisions on a laptop GPU (Apple M1 Max, Metal); 110.4 s per decision in the CPU-only container (first ten test decisions).
 
 Details, method and limitations: [technical report](technical_report.md) ([PDF](Redacta_Report.pdf)). Demo video: (link in the submission form)
 
