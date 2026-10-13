@@ -113,7 +113,7 @@
 {"id": "CH_BGer_007_7F-50-2026_2026-09-08", "missed": ["Luca Sala", "Luca Sala", "Luca Sala", "Sala Garage"], "false_pos": ["via Pretorio 16, 6901 Lugano", "via Pretorio 16, 6901 Lugano"]}
 {"id": "CH_BGer_007_7F-62-2026_2026-09-17", "missed": ["Stefan Marti", "Marti", "Marti", "Daniela Baumann"], "false_pos": ["Nordring 8", "Hochschulstrasse 17, 3012 Bern"]}
 {"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["Isabelle Perrin", "Isabelle Perrin", "Rochat Immobilier", "Camille Tissot", "Luc Mercier", "Perrin", "Mercier", "Daniel Berset", "Julien Savary", "Savary"], "false_pos": ["Fluhmattstrasse 1, 6002 Lucerne"]}
-{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": ["Camille Favre", "Camille Favre", "Favre"], "false_pos": ["avenue du Général-Guisan 8, 1800 Vevey", "né le 21 mai 1965"]}
+{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": ["Camille Favre", "Camille Favre", "Favre"], "false_pos": ["avenue du Général-Guisan 8, 1800 Vevey", "21 mai 1965"]}
 {"id": "CH_BGer_008_8C-269-2026_2026-08-03", "missed": ["Luca Vassalli", "Vassalli"], "false_pos": ["via Ghiringhelli 15a, 6500 Bellinzona"]}
 {"id": "CH_BGer_008_8C-284-2026_2026-09-09", "missed": ["Luc Perrin", "Luc Perrin", "Luc Perrin", "Ducret Fiduciaire"], "false_pos": ["Fluhmattstrasse 1, 6002 Lucerne"]}
 {"id": "CH_BGer_008_8C-341-2026_2026-09-01", "missed": ["Pascal Morand", "Morand", "Jean-Marc Berset", "Camille Favre", "Pascal Morand"], "false_pos": ["rue des Terreaux 1, 1530 Payerne"]}

@@ -39,7 +39,7 @@
 {"id": "CH_BGer_007_7B-892-2026_2026-09-15", "missed": ["Lüthi Garage"], "false_pos": []}
 {"id": "CH_BGer_007_7F-62-2026_2026-09-17", "missed": ["Daniela Baumann"], "false_pos": []}
 {"id": "CH_BGer_008_8C-119-2026_2026-09-07", "missed": ["Camille Tissot", "Luc Mercier", "Mercier", "Daniel Berset"], "false_pos": []}
-{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": [], "false_pos": ["né le 21 mai 1965", "Unisanté", "Unisanté", "Unisanté", "Unisanté"]}
+{"id": "CH_BGer_008_8C-168-2026_2026-09-08", "missed": [], "false_pos": ["21 mai 1965", "Unisanté", "Unisanté", "Unisanté", "Unisanté"]}
 {"id": "CH_BGer_008_8C-341-2026_2026-09-01", "missed": [], "false_pos": ["Centre social régional de la Broye-Vully", "Centre social régional de la Broye-Vully", "rue des Terreaux 1, 1530 Payerne"]}
 {"id": "CH_BGer_008_8C-342-2026_2026-08-13", "missed": ["Manuela Vassalli"], "false_pos": []}
 {"id": "CH_BGer_008_8C-578-2026_2026-09-16", "missed": ["Beat Zimmermann", "Hans Ammann"], "false_pos": []}

@@ -105,6 +105,7 @@ def main():
     ap.add_argument("--out", default="outputs/eval")
     ap.add_argument("--split", default="test", choices=["dev", "test", "all"])
     ap.add_argument("--limit", type=int, default=0, help="docs per language (0 = all)")
+    ap.add_argument("--first", type=int, default=0, help="only the first N docs of the split (0 = all)")
     a = ap.parse_args()
     rows = [json.loads(l) for l in open(a.bench, encoding="utf-8")]
     rows = [r for r in rows if a.split == "all" or r["split"] == a.split]
@@ -116,6 +117,8 @@ def main():
                 keep.append(r)
                 per[r["lang"]] += 1
         rows = keep
+    if a.first:
+        rows = rows[: a.first]
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     pred_path = out / "predictions.jsonl"
@@ -146,6 +149,9 @@ def main():
     metrics = aggregate(rows, scores)
     metrics["_mode"] = a.mode
     metrics["_model"] = llm.model if llm else None
+    # sec_per_doc is a speed figure only when the answers were not read from LLM_CACHE_DIR
+    metrics["_llm_live_calls"] = llm.calls if llm else 0
+    metrics["_llm_cache"] = bool(llm and llm.cache_dir)
     (out / "metrics.json").write_text(json.dumps(metrics, indent=2, ensure_ascii=False))
     with open(out / "errors.jsonl", "w", encoding="utf-8") as f:
         for sc in scores:

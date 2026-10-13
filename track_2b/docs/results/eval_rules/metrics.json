@@ -82,5 +82,7 @@
     "n_LOCATION": 3
   },
   "_mode": "rules",
-  "_model": null
+  "_model": null,
+  "_llm_live_calls": 0,
+  "_llm_cache": false
 }

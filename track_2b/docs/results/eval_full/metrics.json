@@ -82,5 +82,7 @@
     "n_LOCATION": 3
   },
   "_mode": "full",
-  "_model": "swiss-ai/Apertus-v1.5-8B"
+  "_model": "swiss-ai/Apertus-v1.5-8B",
+  "_llm_live_calls": 0,
+  "_llm_cache": true
 }

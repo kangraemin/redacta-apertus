@@ -7,7 +7,7 @@
     "leak_free_docs": 0.75,
     "protected_redacted": 0.0,
     "protected_occurrences": 137,
-    "sec_per_doc": 12.6,
+    "sec_per_doc": 0.0,
     "items_to_confirm_per_doc": 3.4,
     "recall_PERSON": 0.9014,
     "n_PERSON": 213,
@@ -28,7 +28,7 @@
     "leak_free_docs": 0.8333,
     "protected_redacted": 0.0,
     "protected_occurrences": 6,
-    "sec_per_doc": 11.1,
+    "sec_per_doc": 0.0,
     "items_to_confirm_per_doc": 3.1,
     "recall_PERSON": 0.8983,
     "n_PERSON": 59,
@@ -47,7 +47,7 @@
     "leak_free_docs": 0.5556,
     "protected_redacted": 0.0,
     "protected_occurrences": 47,
-    "sec_per_doc": 13.7,
+    "sec_per_doc": 0.0,
     "items_to_confirm_per_doc": 4.6,
     "recall_PERSON": 0.9146,
     "n_PERSON": 82,
@@ -68,7 +68,7 @@
     "leak_free_docs": 0.8,
     "protected_redacted": 0.0,
     "protected_occurrences": 84,
-    "sec_per_doc": 13.2,
+    "sec_per_doc": 0.0,
     "items_to_confirm_per_doc": 3.1,
     "recall_PERSON": 0.8889,
     "n_PERSON": 72,
@@ -80,5 +80,7 @@
     "n_LOCATION": 2
   },
   "_mode": "full",
-  "_model": "swiss-ai/Apertus-v1.5-8B"
+  "_model": "swiss-ai/Apertus-v1.5-8B",
+  "_llm_live_calls": 0,
+  "_llm_cache": true
 }
